@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Page Title</title>
+</head>
+<body>
+
+    <input type="text" name="distancia" id="distancia"/>
+    <div id="resultado"></div>
+    <button onclick="calcular()">Calcular</button>
+<script type="text/javascript">
+
+    function calcular(){
+        let distancia = document.getElementById("distancia").value;
+        let resultado = document.getElementById("resultado");
+        resultado.innerHTML = distancia + 5;
+    }
+   
+</script>
+
+</body>
+</html>
