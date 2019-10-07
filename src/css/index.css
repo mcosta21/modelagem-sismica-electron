@@ -1,10 +1,20 @@
 
 body{
-    border-top: 1px solid #e5e5e5
+    border-top: 1px solid #e5e5e5;
+    margin: 0;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 .container{
-    margin-bottom: 10px;
+    margin: 10px;
     display: flex;
+}
+
+.height55vh{
+    height: 55vh
+}
+
+.height35vh{
+    height: 34vh
 }
 
 .width70{
@@ -15,13 +25,17 @@ body{
     width: 30%
 }
 
-.container div { 
-    flex: 1;
-  }
-
 .btn{
     padding: 10px 20px;
     border: none;
+}
+
+.btn_icon{
+   background: transparent;
+   padding: 10px;
+   border: 1px solid #e5e5e5;
+   border-radius: 2px;
+   margin-top: -3px
 }
 
 .input{
@@ -32,6 +46,86 @@ body{
     color: red
 }
 
-#painel_objetos{
-    overflow-y: scroll
+#painelObjetos{
+    overflow-y: scroll;
+    margin-left: 10px; 
+    border-radius: 3px;
+    border: 1px solid #e5e5e5;
+}
+
+.ponto{
+    border: 1px solid #e5e5e5;
+    padding: 10px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 12px;
+    font-weight: 400
+}
+
+.ponto li{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.ponto .sequencia{
+    padding: 5px;
+    width: 40px;
+    text-align: center;
+    background: #5edfff;
+    font-weight: 600;
+    border-radius: 20px;   
+}
+
+.ponto .separador{
+    margin-top: 6px;
+    border-bottom: 1px solid #e5e5e5
+}
+
+.ponto .linha{
+    font-size: 12px;
+    line-height: 30px;
+}
+
+#painelCadastro{
+    border-radius: 3px;
+    overflow: auto;
+    border: 1px solid #e5e5e5;
+}
+
+#painelResultado{
+    margin: 10px;
+    border-radius: 3px;
+    border: 1px solid #e5e5e5;
+    padding: 20px;
+}
+
+.titulo{
+    height:30px; 
+    padding: 10px;
+    background: #f7f7f7;
+    border-bottom: 1px solid #e5e5e5;
+    font-size: 13px;
+    color: #818181
+}
+
+.titulo h3{
+    margin-top: 6px;
+    margin-left: 10px;
+    float: left;
+}
+
+.titulo button{
+    float: right
+}
+
+#listaPontos{
+    padding: 5px 20px;
+}
+
+.cadastro{
+    padding: 5px 20px;
+}
+
+.box_cadastro{
+    font-size: 13px
 }

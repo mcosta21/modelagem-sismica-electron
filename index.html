@@ -4,31 +4,54 @@
 <title>Modelagem Sísmica Simplificada em Meios Isotrópicos</title>
 </head>
 <link rel="stylesheet" type="text/css" href="./src/css/index.css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700&display=swap" rel="stylesheet">
 <body>
-
-        <div class="container" >
-
-                <div>
-                    <h3>Distância</h3>
+    <div class="container height55vh">
+        <div id="painelCadastro" class="width70" >
+            <div class="titulo">
+                <h3>Cadastrar ponto de análise</h3>
+                <button class="btn_icon">...</button>
+            </div>
+            <div class="cadastro">
+                <div class="box_cadastro">
+                    <h3>Distância (m)</h3>
                     <input class="input" type="text" name="distancia" id="distancia"/>
                 </div>
 
-                <div>
-                    <h3>Altura</h3>
+                <div class="box_cadastro"> 
+                    <h3>Altura (m)</h3>
                     <input class="input" type="text" name="altura" id="altura"/>
                 </div>
 
-                <div>
-                    <h3>V</h3>
-                    <input class="input" type="text" name="v" id="v"/>
+                <div class="box_cadastro">
+                    <h3>Velocidade (m/s)</h3>
+                    <select id="material">
+                        <option value="agua">Água</option>
+                        <option value="sal">Sal</option>
+                    </select>
                 </div>
-
+                <div style="margin-top: 10px">
+                    <button class="btn" onclick="adicionarPonto()">Adicionar</button>
+                </div>
+            </div>
         </div>
 
-        <div class="container width30" style="background: blue">
+        <div id="painelObjetos" class="width30">
+            <div class="titulo">
+                <h3>Pontos</h3>
+                <button class="btn_icon">...</button>
+            </div>
+            <div id="listaPontos">
+
+            </div>
+        </div>
+    </div>
+
+    <div id="painelResultado" class="height35vh">
             <button class="btn" onclick="calcular()">Calcular</button>
+            <button class="btn" onclick="limpar()">Limpar</button>
             <div id="resultado"></div>
-        </div>
+    </div>
 <script type="text/javascript" src="src/js/index.js"></script>
 </body>
 </html>
