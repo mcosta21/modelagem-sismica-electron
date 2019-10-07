@@ -1,6 +1,7 @@
 
 
 function calcular(){
+    
     let distanciaTotal = 0
     let alturaTotal = 0
     let tempoTotal = 0
@@ -14,6 +15,7 @@ function calcular(){
                         + "<li> Altura Total: " + alturaTotal + "cm </li>"
                         + "<li> Tempo Total: " + tempoTotal + "s </li>"
                         + "</div>"
+    renderChart()
 }
 
 let arrayPontos = []
@@ -79,4 +81,28 @@ function limpar(){
     resultado.innerHTML = ''
     let distancia = document.getElementById("distancia").value = ''
     let altura = document.getElementById("altura").value = ''
+}
+
+
+function renderChart() {
+    
+    let dataDistancia = []
+    let dataAltura = []
+    for(i=0; i < arrayPontos.length; i++){
+        dataDistancia.push(Number(arrayPontos[i].distancia))
+        dataAltura.push(Number(arrayPontos[i].altura))
+    }
+    let data = [100, -1];
+    let labels =  ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dataDistancia,
+            datasets: [{
+                label: 'Distância',
+                data: dataAltura
+            }]
+        },
+    });
 }

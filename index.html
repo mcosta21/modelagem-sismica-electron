@@ -6,7 +6,7 @@
 <link rel="stylesheet" type="text/css" href="./src/css/index.css">
 <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700&display=swap" rel="stylesheet">
 <body>
-    <div class="container height55vh">
+    <div class="container margin10 height55vh">
         <div id="painelCadastro" class="width70" >
             <div class="titulo">
                 <h3>Cadastrar ponto de análise</h3>
@@ -47,11 +47,23 @@
         </div>
     </div>
 
-    <div id="painelResultado" class="height35vh">
+    <div class="container">
+        <div id="painelResultado" class="width80 height35vh">
+                <div>
+                    <canvas id="myChart" width="400" height="90"></canvas>
+                </div>
+        </div>
+        <div id="painelBotoes" class="width20 height35vh">
             <button class="btn" onclick="calcular()">Calcular</button>
             <button class="btn" onclick="limpar()">Limpar</button>
             <div id="resultado"></div>
+        </div>
     </div>
+    </body>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
 <script type="text/javascript" src="src/js/index.js"></script>
 </body>
 </html>

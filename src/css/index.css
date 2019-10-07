@@ -5,8 +5,11 @@ body{
     font-family: 'Source Sans Pro', sans-serif;
 }
 .container{
-    margin: 10px;
     display: flex;
+}
+
+.margin10{
+    margin: 10px
 }
 
 .height55vh{
@@ -14,7 +17,7 @@ body{
 }
 
 .height35vh{
-    height: 34vh
+    height: 32vh
 }
 
 .width70{
@@ -23,6 +26,18 @@ body{
 
 .width30{
     width: 30%
+}
+
+.width100{
+    width: 100%
+}
+
+.width80{
+    width: 80%
+}
+
+.width20{
+    width: 20%
 }
 
 .btn{
@@ -92,7 +107,7 @@ body{
     border: 1px solid #e5e5e5;
 }
 
-#painelResultado{
+#painelResultado, #painelBotoes{
     margin: 10px;
     border-radius: 3px;
     border: 1px solid #e5e5e5;
