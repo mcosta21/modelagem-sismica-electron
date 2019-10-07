@@ -1,0 +1,37 @@
+
+body{
+    border-top: 1px solid #e5e5e5
+}
+.container{
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.width70{
+    width: 70%
+}
+
+.width30{
+    width: 30%
+}
+
+.container div { 
+    flex: 1;
+  }
+
+.btn{
+    padding: 10px 20px;
+    border: none;
+}
+
+.input{
+    padding: 10px
+}
+
+#resultado{
+    color: red
+}
+
+#painel_objetos{
+    overflow-y: scroll
+}
