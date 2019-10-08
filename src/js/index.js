@@ -146,6 +146,7 @@ var myChart
 var myChart2
 window.onload = function() {
 
+	/*
 	let newDataset = {
         label: 'Dataset ' + 1,
         data: [{x: 0, y: 0}, {x: 50, y: -30}, {x: 100, y: 0}],
@@ -169,15 +170,18 @@ window.onload = function() {
 		backgroundColor: getRandomColor(),
         borderColor: getRandomColor(),
 	};
-	
+	*/
 
 	myConsole.log( "Renderizando grafico.");
 	ctx = document.getElementById("myChart").getContext('2d');
 	myChart = new Chart(ctx, {
         type: 'scatter',
         data: {
-				datasets: []				
-			  }
+				datasets: []		
+			  },
+			  options: {
+				showLines: true // disable for all datasets
+			}
 	});
 }
 
