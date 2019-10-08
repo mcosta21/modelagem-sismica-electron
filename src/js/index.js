@@ -89,19 +89,30 @@ function limpar(){
 
 
 function renderChart() {
-    
+    myChart.data.datasets = []
     let dataDistancia = []
 	let dataAltura = []
-	
+	let newDataset
     for(i=0; i < arrayPontos.length; i++){  
         dataDistancia.push(0)    
         dataAltura.push(0)
         dataDistancia.push(arrayPontos[i].distancia / 2)
         dataAltura.push(Number(arrayPontos[i].altura)*-1)
         dataDistancia.push(arrayPontos[i].distancia)
-        dataAltura.push(0)        
+		dataAltura.push(0)    
+		
+		newDataset = {
+			label: 'N' + (i+1),
+			data: [{x: 0, y: 0}, {x: (arrayPontos[i].distancia / 2), y: (Number(arrayPontos[i].altura)*-1)}, {x: arrayPontos[i].distancia, y: 0}],
+			lineTension: 0,
+			backgroundColor: getRandomColor(),
+			borderColor: getRandomColor(),
+		};
+		myChart.data.datasets.push(newDataset)
+		window.myChart.update()
     }       
 
+	/*
 	let newLabels = ['0', '50', '100']
 	
     let newDataset = {
@@ -117,11 +128,13 @@ function renderChart() {
 		lineTension: 0,
 		backgroundColor: getRandomColor(),
         borderColor: getRandomColor()
-    };
-  
+	};
+	
+	
 	myChart.data.labels.push('120')
 	myChart.data.datasets.push(newDataset2)
 	window.myChart.update()
+	*/
 }
 
 function getRandomColor() {
@@ -130,25 +143,42 @@ function getRandomColor() {
 
 var ctx
 var myChart
+var myChart2
 window.onload = function() {
-	myConsole.log( "Renderizando grafico." );
+
+	let newDataset = {
+        label: 'Dataset ' + 1,
+        data: [{x: 0, y: 0}, {x: 50, y: -30}, {x: 100, y: 0}],
+		lineTension: 0,
+		backgroundColor: getRandomColor(),
+        borderColor: getRandomColor(),
+	};
+
+	let newDataset2 = {
+        label: 'Dataset ' + 2,
+        data: [{x: 0, y: 0}, {x: 70, y: -30}, {x: 120, y: 0}],
+		lineTension: 0,
+		backgroundColor: getRandomColor(),
+        borderColor: getRandomColor(),
+	};
+
+	let newDataset3 = {
+        label: 'Dataset ' + 2,
+        data: [{x: 0, y: 0}, {x: 80, y: -30}, {x: 140, y: 0}],
+		lineTension: 0,
+		backgroundColor: getRandomColor(),
+        borderColor: getRandomColor(),
+	};
+	
+
+	myConsole.log( "Renderizando grafico.");
 	ctx = document.getElementById("myChart").getContext('2d');
 	myChart = new Chart(ctx, {
-        type: 'line',
+        type: 'scatter',
         data: {
-            datasets: [],
-            labels: []
-		},
-		options: {
-			scales: {
-				yAxes: [{
-					ticks: {
-						beginAtZero: 0
-					}
-				}]
-			}
-		}
-    });
+				datasets: []				
+			  }
+	});
 }
 
 
