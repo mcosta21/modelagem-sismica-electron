@@ -35,7 +35,7 @@ function adicionarPonto(){
     let material = document.getElementById("material").value
     let velocidade = obterVelocidade(material)
 
-    let tempo = Math.sqrt(Math.pow(Number.parseFloat(altura), 2) + (Math.pow(Number.parseFloat(distancia), 2) / 4)) / Number.parseFloat(velocidade)
+    let tempo = (2 * Math.sqrt( Math.pow(Number.parseFloat(altura), 2) + (Math.pow(Number.parseFloat(distancia), 2) / 4) ) ) / Number.parseFloat(velocidade)
 
     let pontoJson = {
                         "sequencia": arrayPontos.length, 
@@ -65,7 +65,7 @@ function adicionarPonto(){
 
 function obterVelocidade(material){
     if(material == 'agua'){
-        return 9
+        return 1500
     }
     else if(material == 'sal'){
         return 19
@@ -90,16 +90,16 @@ function limpar(){
 
 function renderChart() {
     myChart.data.datasets = []
-    let dataDistancia = []
-	let dataAltura = []
+    //let dataDistancia = []
+	//let dataAltura = []
 	let newDataset
     for(i=0; i < arrayPontos.length; i++){  
-        dataDistancia.push(0)    
-        dataAltura.push(0)
-        dataDistancia.push(arrayPontos[i].distancia / 2)
-        dataAltura.push(Number(arrayPontos[i].altura)*-1)
-        dataDistancia.push(arrayPontos[i].distancia)
-		dataAltura.push(0)    
+        //dataDistancia.push(0)    
+        //dataAltura.push(0)
+        //dataDistancia.push(arrayPontos[i].distancia / 2)
+        //dataAltura.push(Number(arrayPontos[i].altura)*-1)
+        //dataDistancia.push(arrayPontos[i].distancia)
+		//dataAltura.push(0)    
 		
 		newDataset = {
 			label: 'N' + (i+1),
@@ -138,40 +138,12 @@ function renderChart() {
 }
 
 function getRandomColor() {
-    return "rgba(" + (Math.random() * 256) + ", " + (Math.random() * 256) + ", " + (Math.random() * 256) + ", 0.4)"    
+    return "rgba(" + (Math.random() * 256) + ", " + (Math.random() * 256) + ", " + (Math.random() * 256) + ", 0.2)"    
 }
 
 var ctx
 var myChart
-var myChart2
 window.onload = function() {
-
-	/*
-	let newDataset = {
-        label: 'Dataset ' + 1,
-        data: [{x: 0, y: 0}, {x: 50, y: -30}, {x: 100, y: 0}],
-		lineTension: 0,
-		backgroundColor: getRandomColor(),
-        borderColor: getRandomColor(),
-	};
-
-	let newDataset2 = {
-        label: 'Dataset ' + 2,
-        data: [{x: 0, y: 0}, {x: 70, y: -30}, {x: 120, y: 0}],
-		lineTension: 0,
-		backgroundColor: getRandomColor(),
-        borderColor: getRandomColor(),
-	};
-
-	let newDataset3 = {
-        label: 'Dataset ' + 2,
-        data: [{x: 0, y: 0}, {x: 80, y: -30}, {x: 140, y: 0}],
-		lineTension: 0,
-		backgroundColor: getRandomColor(),
-        borderColor: getRandomColor(),
-	};
-	*/
-
 	myConsole.log( "Renderizando grafico.");
 	ctx = document.getElementById("myChart").getContext('2d');
 	myChart = new Chart(ctx, {
@@ -180,143 +152,29 @@ window.onload = function() {
 				datasets: []		
 			  },
 			  options: {
-				showLines: true // disable for all datasets
+				showLines: true,
+				scales: {
+					yAxes: [{
+					  scaleLabel: {
+						display: true,
+						labelString: 'Altura',
+						fontSize: 14
+					  },
+					}],
+					xAxes: [{
+					  scaleLabel: {
+						display: true,
+						labelString: 'Distância',
+						fontSize: 14
+					  }
+					}],
+				  },
+				  title: {
+						display: true,
+						text: 'PLOTAGEM',
+						fontSize: 16
+					}
 			}
 	});
 }
 
-
-//----------------------------------------
-
-
-		var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-		var config = {
-			type: 'line',
-			data: {
-				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-				datasets: [{
-					label: 'My First dataset',
-					backgroundColor: window.chartColors.red,
-					borderColor: window.chartColors.red,
-					data: [
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor()
-					],
-					fill: false,
-				}, {
-					label: 'My Second dataset',
-					fill: false,
-					backgroundColor: window.chartColors.blue,
-					borderColor: window.chartColors.blue,
-					data: [
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor(),
-						randomScalingFactor()
-					],
-				}]
-			},
-			options: {
-				responsive: true,
-				title: {
-					display: true,
-					text: 'Chart.js Line Chart'
-				},
-				tooltips: {
-					mode: 'index',
-					intersect: false,
-				},
-				hover: {
-					mode: 'nearest',
-					intersect: true
-				},
-				scales: {
-					xAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Month'
-						}
-					}],
-					yAxes: [{
-						display: true,
-						scaleLabel: {
-							display: true,
-							labelString: 'Value'
-						}
-					}]
-				}
-			}
-		};
-
-		window.onload = function() {
-			var ctx = document.getElementById('canvas').getContext('2d');
-			window.myLine = new Chart(ctx, config);
-		};
-
-		document.getElementById('randomizeData').addEventListener('click', function() {
-			config.data.datasets.forEach(function(dataset) {
-				dataset.data = dataset.data.map(function() {
-					return randomScalingFactor();
-				});
-
-			});
-
-			window.myLine.update();
-		});
-
-		var colorNames = Object.keys(window.chartColors);
-		document.getElementById('addDataset').addEventListener('click', function() {
-			var colorName = colorNames[config.data.datasets.length % colorNames.length];
-			var newColor = window.chartColors[colorName];
-			var newDataset = {
-				label: 'Dataset ' + config.data.datasets.length,
-				backgroundColor: newColor,
-				borderColor: newColor,
-				data: [],
-				fill: false
-			};
-
-			for (var index = 0; index < config.data.labels.length; ++index) {
-				newDataset.data.push(randomScalingFactor());
-			}
-
-			config.data.datasets.push(newDataset);
-			window.myLine.update();
-		});
-
-		document.getElementById('addData').addEventListener('click', function() {
-			if (config.data.datasets.length > 0) {
-				var month = MONTHS[config.data.labels.length % MONTHS.length];
-				config.data.labels.push(month);
-
-				config.data.datasets.forEach(function(dataset) {
-					dataset.data.push(randomScalingFactor());
-				});
-
-				window.myLine.update();
-			}
-		});
-
-		document.getElementById('removeDataset').addEventListener('click', function() {
-			config.data.datasets.splice(0, 1);
-			window.myLine.update();
-		});
-
-		document.getElementById('removeData').addEventListener('click', function() {
-			config.data.labels.splice(-1, 1); // remove the label first
-
-			config.data.datasets.forEach(function(dataset) {
-				dataset.data.pop();
-			});
-
-			window.myLine.update();
-		});
