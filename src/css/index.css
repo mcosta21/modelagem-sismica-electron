@@ -25,6 +25,7 @@ body{
 .conteudo{
     background: #f8f9fa;
     overflow-y: scroll;
+    height: 100%;
 }
 
 #painelCadastro{
@@ -38,6 +39,10 @@ body{
     background: white;
     border-radius: 5px;
     border: 1px solid #ced4da;
+}
+
+.box_range .row{
+    height: inherit;
 }
 
 .slider {
@@ -73,69 +78,68 @@ body{
     cursor: pointer;
   }
 
-
-
-.margin10{
-    margin: 10px
+  
+#cadastroGeofones{
+    padding: 5px 20px;
 }
 
-.height45vh{
-    height: 47vh
+#painelResultados{
+    display: none;
 }
 
-.height35vh{
-    height: 42vh
+#painelResultados div{
+    margin: 15px;
 }
 
-.width70{
-    width: 80%
+#painelResultados .row1{
+    height: 57vh;
 }
 
-.width30{
-    width: 30%
+#painelResultados .row2{
+    height: 30vh;
 }
 
-.width100{
-    width: 100%
+.painelResultados .row2 .painelBotoes{
+    overflow-y: scroll;
+    position: absolute;
+    background: white;
+    border-radius: 3px;
+    padding: 0;
+    border: 1px solid #e5e5e5;
+    height: inherit;
 }
 
-.width80{
-    width: 80%
-}
-
-.width20{
-    width: 20%
-}
-
-.btn_icon{
-   background: transparent;
-   padding: 10px;
-   border: 1px solid #e5e5e5;
-   border-radius: 2px;
-   margin-top: -3px
-}
-
-.input{
-    padding: 10px
-}
-
-#resultado{
-    color: red
+#painelTotais{
+    background: white;
+    border-radius: 3px;
+    height: 25vh;
+    border: 1px solid #e5e5e5;
 }
 
 #painelObjetos{
     overflow-y: scroll;
-    margin-left: 10px; 
+    background: white;
     border-radius: 3px;
+    padding: 0;
+    border: 1px solid #e5e5e5;
+    height: 55vh;
+}
+
+#painelChart{
+    background: white;
+    border-radius: 3px;
+    height: 55vh;
     border: 1px solid #e5e5e5;
 }
 
 .ponto{
-    border: 1px solid #e5e5e5;
+    border: 1px solid rgba(0,0,0,.1);
     padding: 10px;
     font-family: 'Source Sans Pro', sans-serif;
     font-size: 12px;
-    font-weight: 400
+    font-weight: 400;
+    border-radius: 3px;
+    box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,.1);
 }
 
 .ponto li{
@@ -144,17 +148,9 @@ body{
     padding: 0;
 }
 
-.ponto .sequencia{
-    padding: 5px;
-    width: 40px;
-    text-align: center;
-    background: #5edfff;
-    font-weight: 600;
-    border-radius: 20px;   
-}
-
 .ponto .separador{
     margin-top: 6px;
+    margin-bottom: 5px;
     border-bottom: 1px solid #e5e5e5
 }
 
@@ -163,51 +159,42 @@ body{
     line-height: 30px;
 }
 
-
-
-#painelResultado{
+.ponto .dot{
+    height: 15px;
+    width: 15px;
     border-radius: 3px;
-    border: 1px solid #e5e5e5;
-}
-
-.titulo{
-    height:30px; 
-    padding: 10px;
-    background: #f7f7f7;
-    border-bottom: 1px solid #e5e5e5;
-    font-size: 13px;
-    color: #818181
-}
-
-.titulo h3{
-    margin-top: 6px;
-    margin-left: 10px;
+    background: #007bff;
     float: left;
+    margin: 0 !important;
+    margin-right: 8px !important;
 }
 
-.titulo button{
-    float: right
+.hidden{
+    display: none !important;
 }
 
-#listaPontos{
-    padding: 5px 20px;
+.show{
+    display: block !important;
 }
 
-.cadastro{
-    padding: 5px 20px;
+.box_resultados{
+    margin: 20px 10px;
+    padding: 0;
 }
 
-.box_cadastro{
-    font-size: 13px
+.box_resultados li{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 }
 
-
-
-#painelBotoes{
-    margin-left: 20px;
-    border-radius: 3px;
-    border: 1px solid #e5e5e5;
-    height: 100%;
+.box_resultados .separador{
+    margin-top: 6px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #e5e5e5
 }
-  .listaResultados{
-  }
+
+.box_resultados .linha{
+    font-size: 13px;
+    line-height: 30px;
+}

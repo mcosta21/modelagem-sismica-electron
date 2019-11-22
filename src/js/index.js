@@ -12,28 +12,28 @@ async function gerar(){
         dialog.showMessageBox(dialogAlert, (i) => console.log(i))
         return
     }
-
-    let distancia = document.getElementById("distancia").value
+    
+    let distancia = document.getElementById("distancia").value/1000
     if(distancia.length == 0){
         const dialogAlert = {title: "Erro", type: 'info', buttons: ['OK'], message: "A distância total não foi informada."}
         dialog.showMessageBox(dialogAlert, (i) => console.log(i))
         return
     }
-
-    let altura = document.getElementById("altura").value
+    
+    let altura = document.getElementById("altura").value/1000
     if(altura.length == 0){
         const dialogAlert = {title: "Erro", type: 'info', buttons: ['OK'], message: "A altura não foi informada."}
         dialog.showMessageBox(dialogAlert, (i) => console.log(i))
         return
     }
-
+    
     let velocidade = document.getElementById("myRange").value
     if(velocidade.length == 0){
       const dialogAlert = {title: "Erro", type: 'info', buttons: ['OK'], message: "A velocidade não foi informada."}
       dialog.showMessageBox(dialogAlert, (i) => console.log(i))
       return
     }    
-
+    
     if(arrayPontos != 0){
       const dialogAlert = {title: "Erro", type: 'question', buttons: ['Confirmar', 'Cancelar'], message: "Tem certeza de que deseja gerar novamente?"}
       let response = await dialog.showMessageBox(dialogAlert).then(function(value){
@@ -50,9 +50,9 @@ async function gerar(){
     
     let lista = document.getElementById("listaPontos")
     for(i = 0; i < Number.parseInt(geofones); i++){
-        let geofone = Number.parseFloat(distancia) / (Number.parseInt(geofones) - i)
+        let geofone = (Number.parseFloat(distancia)) / (Number.parseInt(geofones) - i)
 
-        let tempo = (2 * Math.sqrt( Math.pow(Number.parseFloat(altura), 2) + (Math.pow(Number.parseFloat(geofone), 2) / 4) ) ) / Number.parseFloat(velocidade)
+        let tempo = (2 * Math.sqrt( Math.pow((Number.parseFloat(altura)), 2) + (Math.pow(Number.parseFloat(geofone), 2) / 4) ) ) / Number.parseFloat(velocidade)
         
         let pontoJson = {
             "sequencia": arrayPontos.length, 
@@ -65,12 +65,12 @@ async function gerar(){
         arrayPontos.push(pontoJson)
 
         let ponto =   "<ul class='ponto'>" 
-        + "   <li class='sequencia'> N° " + arrayPontos.length + "</li> "
+        + "   <li class='sequencia'><div class='dot'></div><strong> N° " + arrayPontos.length + " </strong></li> "
         + "   <li class='separador'></li> "
-        + "   <li class='linha'> Distância: <strong>" + geofone + "m</strong> </li> "
-        + "   <li class='linha'> Altura: <strong>" + altura + "m</strong></li> "
-        + "   <li class='linha'> Velocidade: <strong>" + velocidade + "m/s</strong></li> "
-        + "   <li class='linha'> Tempo: <strong>" + tempo + "s</strong></li> "
+        + "   <li class='linha'> Distância: <strong>" + geofone + " km</strong> </li> "
+        + "   <li class='linha'> Altura: <strong>" + altura + " km</strong></li> "
+        + "   <li class='linha'> Velocidade: <strong>" + velocidade + " km s-¹</strong></li> "
+        + "   <li class='linha'> Tempo: <strong>" + tempo + " s</strong></li> "
         + "</ul>"
 
         lista.innerHTML += ponto
@@ -79,7 +79,11 @@ async function gerar(){
 }
 
 function calcular(){
-    
+    let distancia = document.getElementById("distancia").value/1000
+    let selectedMaterial = document.getElementById("material")
+    let texto = selectedMaterial.options[selectedMaterial.selectedIndex].text
+    let velocidade = document.getElementById("myRange").value
+    let painelTotais = document.getElementById("painelTotais")
     let distanciaTotal = 0
     let alturaTotal = 0
     let tempoTotal = 0
@@ -88,13 +92,20 @@ function calcular(){
         alturaTotal += Number(arrayPontos[i].altura)
         tempoTotal += Number(arrayPontos[i].tempo)
     }
-    resultado.innerHTML = "<div class='listaResultados'> " 
-                          + "<h5>Distância Total: </h5>"
-                          + "<h4>" + distanciaTotal + "cm</h4>"
-                          + "<h5> Altura Total: " + alturaTotal + "cm </h5>"
-                          + "<h5> Tempo Total: " + tempoTotal + "s </h5>"
-                        + "</div>"
-    renderChart()
+    
+    painelTotais.innerHTML = "<ul class='box_resultados'>" 
+                          + "   <li><h4>Resultados</h4></li> "
+                          + "   <li class='separador'></li> "
+                          + "   <li class='linha'> Distância Total: <strong> " + distancia + " km </strong> </li> "
+                          + "   <li class='linha'> Altura Total: <strong>" + alturaTotal + " km </strong></li> "
+                          + "   <li class='linha'> Tempo Total: <strong>" + tempoTotal + " s </strong> </li> "
+                          + "   <li class='linha'> Material: <strong>" + texto + "</strong> </li> "                          
+                          + "   <li class='linha'> Velocidade: <strong>" + velocidade + "km s-¹ </strong> </li> "
+                          + "</ul>"
+    
+    renderChart()    
+    ocultarCadastroGeofones()
+    mostrarGrafico()
 }
 
 async function limpar(){
@@ -107,12 +118,16 @@ async function limpar(){
       //0 - confirmar e 1 - cancelar
       return
     } 
-
+    
     arrayPontos = []
+    
     let lista = document.getElementById("listaPontos")
     lista.innerHTML = ''
-    resultado.innerHTML = ''
-    let material = document.getElementById("material").value = ''
+    
+    let painelTotais = document.getElementById("painelTotais")
+    painelTotais.innerHTML = ''
+
+    let material = document.getElementById("material").value = '' 
     let slider = document.getElementById("myRange");
     slider.min = '';
     slider.max = '';
@@ -131,7 +146,8 @@ function limparListas(){
   arrayPontos = []
   let lista = document.getElementById("listaPontos")
   lista.innerHTML = ''
-  resultado.innerHTML = ''
+  let painelTotais = document.getElementById("painelTotais")
+  painelTotais.innerHTML = ''
   myChart.data.labels = []
   myChart.data.datasets = []
   window.myChart.update()
@@ -139,7 +155,7 @@ function limparListas(){
 
 
 function renderChart() {
-    myChart.data.datasets = []
+  myChart.data.datasets = []
 	let newDataset
     for(i=0; i < arrayPontos.length; i++){  		
 		newDataset = {
@@ -151,7 +167,42 @@ function renderChart() {
 		};
 		myChart.data.datasets.push(newDataset)
 		window.myChart.update()
-    }       
+    }
+}
+
+async function voltarParaCadastroGeofones(){
+    const dialogAlert = {title: "Erro", type: 'question', buttons: ['Confirmar', 'Cancelar'], message: "Tem certeza de que deseja voltar?"}
+    let response = await dialog.showMessageBox(dialogAlert).then(function(value){
+      return value.response
+    })
+    if(response == 1){
+      //0 - confirmar e 1 - cancelar
+      return
+    } 
+    mostrarCadastroGeofones()
+    ocultarGrafico()
+}
+
+function mostrarCadastroGeofones(){
+  let cadastroGeofones = document.getElementById("cadastroGeofones")
+  cadastroGeofones.classList.remove("hidden")
+  cadastroGeofones.classList.add("show")
+}
+
+function ocultarCadastroGeofones(){
+  let cadastroGeofones = document.getElementById("cadastroGeofones")
+  cadastroGeofones.classList.remove("show")
+  cadastroGeofones.classList.add("hidden")
+}
+
+function mostrarGrafico(){
+  let painelResultados = document.getElementById("painelResultados")
+  painelResultados.classList.add("show")
+}
+
+function ocultarGrafico(){
+  let painelResultados = document.getElementById("painelResultados")
+  painelResultados.classList.remove("show")
 }
 
 function getRandomColor() {
@@ -305,6 +356,26 @@ function changeMaterial(){
     slider.min = Number.parseFloat(5.5)      
     slider.max = Number.parseFloat(6.5)
     slider.value = Number.parseFloat(6.0)
+  }
+  else if(material == 'ar'){   
+    slider.min = Number.parseFloat(0.3)      
+    slider.max = Number.parseFloat(0.3)
+    slider.value = Number.parseFloat(0.3)
+  }
+  else if(material == 'agua'){   
+    slider.min = Number.parseFloat(1.4)      
+    slider.max = Number.parseFloat(1.5)
+    slider.value = Number.parseFloat(1.4)
+  }
+  else if(material == 'gelo'){   
+    slider.min = Number.parseFloat(3.4)      
+    slider.max = Number.parseFloat(3.4)
+    slider.value = Number.parseFloat(3.4)
+  }
+  else if(material == 'petroleo'){   
+    slider.min = Number.parseFloat(1.3)      
+    slider.max = Number.parseFloat(1.4)
+    slider.value = Number.parseFloat(1.3)
   }
   
   valueRange.innerHTML = slider.value;
