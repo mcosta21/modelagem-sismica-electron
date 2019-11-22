@@ -13,15 +13,15 @@ body{
 }
 
 .height55vh{
-    height: 55vh
+    height: 45vh
 }
 
 .height35vh{
-    height: 32vh
+    height: 42vh
 }
 
 .width70{
-    width: 70%
+    width: 80%
 }
 
 .width30{
@@ -107,11 +107,11 @@ body{
     border: 1px solid #e5e5e5;
 }
 
-#painelResultado, #painelBotoes{
+#painelResultado{
     margin: 10px;
     border-radius: 3px;
     border: 1px solid #e5e5e5;
-    padding: 20px;
+    height: 100%;
 }
 
 .titulo{
@@ -144,3 +144,47 @@ body{
 .box_cadastro{
     font-size: 13px
 }
+
+.slider {
+    -webkit-appearance: none;
+    width: 60%;
+    height: 15px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+  }
+  
+  .slider:hover {
+    opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+  }
+
+  #material{
+      padding: 10px
+  }
+
+#painelBotoes{
+    margin-left: 20px;
+    border-radius: 3px;
+    border: 1px solid #e5e5e5;
+    height: 100%;
+}
+  .listaResultados{
+  }

@@ -14,7 +14,12 @@
             </div>
             <div class="cadastro">
                 <div class="box_cadastro">
-                    <h3>Distância (m)</h3>
+                    <h3>Quantidade de geofones:</h3>
+                    <input class="input" type="text" name="geofones" id="geofones"/>
+                </div>
+
+                <div class="box_cadastro">
+                    <h3>Distância total:</h3>
                     <input class="input" type="text" name="distancia" id="distancia"/>
                 </div>
 
@@ -24,40 +29,77 @@
                 </div>
 
                 <div class="box_cadastro">
-                    <h3>Velocidade (m/s)</h3>
-                    <select id="material">
-                        <option value="agua">Água</option>
-                        <option value="sal">Sal</option>
+                    <h3>Velocidade (km/s)</h3>
+                    <select id="material" onchange="changeMaterial()">
+                        <option></option>
+
+                        <optgroup label = "Materiais inconsolidados">
+                            <option value="areiaseca">Areia (Seca)</option>
+                            <option value="areiasaturada">Areia (Saturada em água)</option>
+                            <option value="argila">Argila</option>
+                            <option value="tillglacial">Till gladal (Saturado em água)</option>
+                            <option value="permafroste">Permafroste</option>
+                        </optgroup>
+
+                        <optgroup label = "Rochas sedimentares">
+                            <option value="arenitos">Arenitos</option>
+                            <option value="arenitoterciario">Arenito terciário</option>
+                            <option value="arenitopennant">Arenito Pennant (Carbonífero)</option>
+                            <option value="quartzitocambiano">Quartzito cambiano</option>
+
+                            <option value="calcarios">Cálcários</option>
+                            <option value="greda">Greda cretácea</option>
+                            <option value="oolitos">Oólitos jurássicos e calcários bioclásticos</option>
+                            <option value="calcariocarbonifero">Cálcário carbonífero</option>
+
+                            <option value="dolomitos">Dolomitos</option>
+                            <option value="sal">Sal</option>
+                            <option value="anidrita">Anidrita</option>
+                            <option value="gripso">Gipso</option>
+                        </optgroup>
+
+                        <optgroup label = "Rochas igneas/metamórficas">
+                            <option value="granito">Granito</option>
+                            <option value="gabro">Gabro</option>
+                            <option value="rochasultra">Rochas ultramáficas</option>
+                            <option value="serpentinito">Serpentinito</option>
+                        </optgroup>
+                        
+
                     </select>
                 </div>
+                <div style="margin-top: 20px;">
+                    <input type="range" min="0.2" max="1.0" step="0.1" class="slider" id="myRange">
+                    <p>Value: <span id="valueRange"></span></p>
+                </div>
                 <div style="margin-top: 10px">
-                    <button class="btn" onclick="adicionarPonto()">Adicionar</button>
+                    <button class="btn" onclick="gerar()">Calcular</button>
+                    <button class="btn" onclick="limpar()">Limpar</button>
                 </div>
             </div>
         </div>
 
-        <div id="painelObjetos" class="width30">
+        <div id="painelBotoes" class="width20">
+            <div id="resultado"></div>
+        </div>
+        
+    </div>
+
+    <div class="container margin10 height55vh">
+        <div id="painelResultado" class="width70">
+                <div>
+                    <canvas id="myChart"></canvas>
+                </div>
+        </div>
+
+        <div id="painelObjetos" class="width20">
             <div class="titulo">
                 <h3>Pontos</h3>
                 <button class="btn_icon">...</button>
             </div>
-            <div id="listaPontos">
+            <div id="listaPontos"></div>
+        </div>
 
-            </div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div id="painelResultado" class="width80 height35vh">
-                <div>
-                    <canvas id="myChart" width="400" height="90"></canvas>
-                </div>
-        </div>
-        <div id="painelBotoes" class="width20 height35vh">
-            <button class="btn" onclick="calcular()">Calcular</button>
-            <button class="btn" onclick="limpar()">Limpar</button>
-            <div id="resultado"></div>
-        </div>
     </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
