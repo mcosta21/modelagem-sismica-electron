@@ -46,7 +46,8 @@ body{
     background-image: url("../images/logo.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-position: center; 
+    background-position: 58% 50%; 
+    background-size: 40%;
     opacity: 0.2;
 }
 
