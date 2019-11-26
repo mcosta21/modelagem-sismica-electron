@@ -15,11 +15,39 @@ body{
 .menu_lateral{
     box-shadow: 1px 1px 15px #e6e6e6;
     z-index: 1000;
+    padding: 0px 15px !important;
+    margin: 0;
+}
+
+.menu{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    width: inherit;
+}
+
+.title_menu{
+    font-size: 12px;
+    font-style: italic;
 }
 
 .box_logo{
-    height: 50px;
+    height: 90px;
     border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 15px !Important;
+}
+
+#painelIndex{
+    height: 90%;
+    overflow-y: hidden;
+    margin-top: 15px;
+    padding: 20px;
+    background-image: url("../images/logo.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+    opacity: 0.2;
 }
 
 .conteudo{
