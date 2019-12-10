@@ -49,9 +49,11 @@ async function gerar(){
     }
     
     let lista = document.getElementById("listaPontos")
+    let geofone = 0
+    let distanciaEntreGeofones = (Number.parseFloat(distancia)) / (Number.parseInt(geofones))
     for(i = 0; i < Number.parseInt(geofones); i++){
-        let geofone = (Number.parseFloat(distancia)) / (Number.parseInt(geofones) - i)
-
+        geofone = geofone + distanciaEntreGeofones;
+        myConsole.log(geofone)
         let tempo = (2 * Math.sqrt( Math.pow((Number.parseFloat(altura)), 2) + (Math.pow(Number.parseFloat(geofone), 2) / 4) ) ) / Number.parseFloat(velocidade)
         
         let pontoJson = {
@@ -90,7 +92,8 @@ function calcular(){
     for(i=0; i < arrayPontos.length; i++){
         distanciaTotal += Number(arrayPontos[i].distancia)
         alturaTotal += Number(arrayPontos[i].altura)
-        tempoTotal += Number(arrayPontos[i].tempo)
+        if(i+1 == arrayPontos.length)
+          tempoTotal = Number(arrayPontos[i].tempo)
     }
     
     painelTotais.innerHTML = "<ul class='box_resultados'>" 
