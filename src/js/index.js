@@ -86,6 +86,7 @@ function calcular(){
     let texto = selectedMaterial.options[selectedMaterial.selectedIndex].text
     let velocidade = document.getElementById("myRange").value
     let painelTotais = document.getElementById("painelTotais")
+    let altura = document.getElementById("altura").value/1000
     let distanciaTotal = 0
     let alturaTotal = 0
     let tempoTotal = 0
@@ -99,9 +100,9 @@ function calcular(){
     painelTotais.innerHTML = "<ul class='box_resultados'>" 
                           + "   <li><h4>Resultados</h4></li> "
                           + "   <li class='separador'></li> "
-                          + "   <li class='linha'> Distância Total: <strong> " + distancia + " km </strong> </li> "
-                          + "   <li class='linha'> Altura Total: <strong>" + alturaTotal + " km </strong></li> "
-                          + "   <li class='linha'> Tempo Total: <strong>" + tempoTotal + " s </strong> </li> "
+                          + "   <li class='linha'> Distância Percorrida: <strong> " + distancia + " km </strong> </li> "
+                          + "   <li class='linha'> Altura: <strong>" + altura + " km </strong></li> "
+                          + "   <li class='linha'> Tempo: <strong>" + tempoTotal + " s </strong> </li> "
                           + "   <li class='linha'> Material: <strong>" + texto + "</strong> </li> "                          
                           + "   <li class='linha'> Velocidade: <strong>" + velocidade + "km s-¹ </strong> </li> "
                           + "</ul>"
