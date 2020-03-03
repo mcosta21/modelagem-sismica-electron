@@ -139,6 +139,7 @@ body{
 }
 
 #painelTotais{
+    overflow-y: scroll;
     background: white;
     border-radius: 3px;
     height: 25vh;
