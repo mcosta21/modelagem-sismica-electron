@@ -388,6 +388,3 @@ function changeMaterial(){
     valueRange.innerHTML = this.value;
   }
 }
-
-
-
