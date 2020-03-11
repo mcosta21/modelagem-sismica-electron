@@ -13,14 +13,14 @@ async function gerar(){
         return
     }
     
-    let distancia = document.getElementById("distancia").value/1000
+    let distancia = document.getElementById("distancia").value ///1000
     if(distancia.length == 0){
         const dialogAlert = {title: "Erro", type: 'info', buttons: ['OK'], message: "A distância total não foi informada."}
         dialog.showMessageBox(dialogAlert, (i) => console.log(i))
         return
     }
     
-    let altura = document.getElementById("altura").value/1000
+    let altura = document.getElementById("altura").value ///1000
     if(altura.length == 0){
         const dialogAlert = {title: "Erro", type: 'info', buttons: ['OK'], message: "A altura não foi informada."}
         dialog.showMessageBox(dialogAlert, (i) => console.log(i))
@@ -46,50 +46,54 @@ async function gerar(){
       else{
         return
       }     
-    }
-    
-    
+    } 
 
     let lista = document.getElementById("listaPontos")
     let hidrofone = 0
     let distanciaEntreHidrofones = (Number.parseFloat(distancia)) / (Number.parseInt(hidrofones))
     
-    
-    let contador = 0
-    myConsole.log(hidrofones)
-    do{
-        myConsole.log(contador)
-        contador++
-    }
-    while(contador < Number.parseInt(hidrofones))
+    let seno = 0
+    let x1 = 0
+    let x2 = 0
     
     for(i = 0; i < Number.parseInt(hidrofones); i++){
-        hidrofone = hidrofone + distanciaEntreHidrofones;
-        
+        hidrofone = hidrofone + distanciaEntreHidrofones
+        x2 = hidrofone
+        seno = (x2 - x1) / distanciaEntreHidrofones
+        myConsole.log("x1: " + x1 + " | x2: " + x2 + "| D: " + distanciaEntreHidrofones + " | Seno: " + seno)
+
         let tempo = (2 * Math.sqrt( Math.pow((Number.parseFloat(altura)), 2) + (Math.pow(Number.parseFloat(hidrofone), 2) / 4) ) ) / Number.parseFloat(velocidade)
-        
+
         let pontoJson = {
-            "sequencia": arrayPontos.length, 
-            "distancia": Number(hidrofone), 
-            "altura": altura, 
+            "sequencia": arrayPontos.length+1, 
+            "pontoInicial": x1,
+            "pontoFinal": x2, 
+            "alturaInicial": Number.parseFloat(altura),
+            "alturaFinal": Number.parseFloat(altura) + Number.parseFloat(seno),
             "velocidade": velocidade, 
             "tempo": tempo
         }
 
         arrayPontos.push(pontoJson)
-
-        let ponto =   "<ul class='ponto'>" 
-        + "   <li class='sequencia'><div class='dot2'></div><strong> N° " + arrayPontos.length + " </strong></li> "
-        + "   <li class='separador'></li> "
-        + "   <li class='linha'> Distância: <strong>" + hidrofone + " km</strong> </li> "
-        + "   <li class='linha'> Altura: <strong>" + altura + " km</strong></li> "
-        + "   <li class='linha'> Velocidade: <strong>" + velocidade + " km s-¹</strong></li> "
-        + "   <li class='linha'> Tempo: <strong>" + tempo + " s</strong></li> "
-        + "</ul>"
-
-        lista.innerHTML += ponto
+        lista.innerHTML += gerarPontoNaLista(pontoJson.sequencia, pontoJson.pontoInicial, pontoJson.pontoFinal, pontoJson.alturaInicial, pontoJson.alturaFinal, pontoJson.velocidade, pontoJson.tempo)
+        x1 = x2
+        altura = Number.parseFloat(altura) + Number.parseFloat(seno)
     } 
     calcular()                
+}
+
+function gerarPontoNaLista(sequencia, pontoInicial, pontoFinal, alturaInicial, alturaFinal, velocidade, tempo){
+  let ponto =  "<ul class='ponto'>" 
+  + "   <li class='sequencia'><div class='dot2'></div><strong> N° " + sequencia + " </strong></li> "
+  + "   <li class='separador'></li> "
+  + "   <li class='linha'> Ponto Inicial: <strong>" + pontoInicial + " km</strong> </li> "
+  + "   <li class='linha'> Ponto Final: <strong>" + pontoFinal + " km</strong> </li> "
+  + "   <li class='linha'> Altura Inicial: <strong>" + alturaInicial + " km</strong></li> "
+  + "   <li class='linha'> Altura Final: <strong>" + alturaFinal + " km</strong></li> "
+  + "   <li class='linha'> Velocidade: <strong>" + velocidade + " km s-¹</strong></li> "
+  + "   <li class='linha'> Tempo: <strong>" + tempo + " s</strong></li> "
+  + "</ul>"
+  return ponto
 }
 
 function calcular(){
@@ -102,8 +106,9 @@ function calcular(){
     let distanciaTotal = 0
     let alturaTotal = 0
     let tempoTotal = 0
+    
     for(i=0; i < arrayPontos.length; i++){
-        distanciaTotal += Number(arrayPontos[i].distancia)
+        distanciaTotal += Number(arrayPontos[i].pontoFinal)
         alturaTotal += Number(arrayPontos[i].altura)
         if(i+1 == arrayPontos.length)
           tempoTotal = Number(arrayPontos[i].tempo)
@@ -112,7 +117,7 @@ function calcular(){
     painelTotais.innerHTML = "<ul class='box_resultados'>" 
                           + "   <li><h4>Resultados</h4></li> "
                           + "   <li class='separador'></li> "
-                          + "   <li class='linha'> Posição do último hidrofone: <strong> " + distancia + " km </strong> </li> "
+                          //+ "   <li class='linha'> Posição do último hidrofone: <strong> " + distancia + " km </strong> </li> "
                           + "   <li class='linha'> Altura: <strong>" + altura + " km </strong></li> "
                           + "   <li class='linha'> Tempo total: <strong>" + tempoTotal + " s </strong> </li> "
                           + "   <li class='linha'> Material: <strong>" + texto + "</strong> </li> "                          
@@ -172,17 +177,22 @@ function limparListas(){
 
 function renderChart() {
   myChart.data.datasets = []
-	let newDataset
-    for(i=0; i < arrayPontos.length; i++){  		
-		newDataset = {
-			label: 'N' + (i+1),
-			data: [{x: 0, y: 0}, {x: (arrayPontos[i].distancia / 2), y: (Number(arrayPontos[i].altura)*-1)}, {x: arrayPontos[i].distancia, y: 0}],
-			lineTension: 0,
-			backgroundColor: getRandomColor(),
-			borderColor: getRandomColor(),
-		};
-		myChart.data.datasets.push(newDataset)
-		window.myChart.update()
+  let newDataset
+  let resto = 0
+    for(i=0; i < arrayPontos.length; i++){  
+      myConsole.log(arrayPontos[i])
+      newDataset = {
+        label: 'N' + (i+1),
+        data: [{x: (arrayPontos[i].pontoInicial), y: 0}, 
+              {x: ((arrayPontos[i].pontoFinal)/2 + resto), y: ((arrayPontos[i].alturaFinal/2)*-1)},  
+              {x: arrayPontos[i].pontoFinal, y: 0}],
+        lineTension: 0,
+        backgroundColor: getRandomColor(),
+        borderColor: getRandomColor(),
+      };
+      resto = (arrayPontos[i].pontoFinal/2)
+      myChart.data.datasets.push(newDataset)
+      window.myChart.update()
     }
 }
 
