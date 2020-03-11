@@ -61,11 +61,11 @@ async function gerar(){
         myConsole.log(contador)
         contador++
     }
-    while(contador <= Number.parseInt(hidrofones))
+    while(contador < Number.parseInt(hidrofones))
     
     for(i = 0; i < Number.parseInt(hidrofones); i++){
         hidrofone = hidrofone + distanciaEntreHidrofones;
-
+        
         let tempo = (2 * Math.sqrt( Math.pow((Number.parseFloat(altura)), 2) + (Math.pow(Number.parseFloat(hidrofone), 2) / 4) ) ) / Number.parseFloat(velocidade)
         
         let pontoJson = {
