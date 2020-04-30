@@ -27,12 +27,14 @@ async function gerar(){
         return
     }
     
-    let velocidade = document.getElementById("myRange").value
-    if(velocidade.length == 0){
+    let material = document.getElementById("material").value
+    if(material == 0){
       const dialogAlert = {title: "Erro", type: 'info', buttons: ['OK'], message: "A velocidade não foi informada."}
       dialog.showMessageBox(dialogAlert, (i) => console.log(i))
       return
     }    
+
+    let velocidade = document.getElementById("myRange").value 
     
     if(arrayPontos != 0){
       const dialogAlert = {title: "Erro", type: 'question', buttons: ['Confirmar', 'Cancelar'], message: "Tem certeza de que deseja gerar novamente?"}

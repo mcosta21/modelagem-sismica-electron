@@ -13,27 +13,29 @@ async function gerar(){
         return
     }
     
-    let distancia = document.getElementById("distancia").value ///1000
+    let distancia = document.getElementById("distancia").value
     if(distancia.length == 0){
         const dialogAlert = {title: "Erro", type: 'info', buttons: ['OK'], message: "A distância total não foi informada."}
         dialog.showMessageBox(dialogAlert, (i) => console.log(i))
         return
     }
-    
-    let altura = document.getElementById("altura").value ///1000
-    if(altura.length == 0){
-        const dialogAlert = {title: "Erro", type: 'info', buttons: ['OK'], message: "A altura não foi informada."}
+
+    let angulo = document.getElementById("angulo").value
+    if(angulo.length == 0){
+        const dialogAlert = {title: "Erro", type: 'info', buttons: ['OK'], message: "O ângulo não foi informado."}
         dialog.showMessageBox(dialogAlert, (i) => console.log(i))
         return
     }
     
-    let velocidade = document.getElementById("myRange").value
-    if(velocidade.length == 0){
+    let material = document.getElementById("material").value
+    if(material == 0){
       const dialogAlert = {title: "Erro", type: 'info', buttons: ['OK'], message: "A velocidade não foi informada."}
       dialog.showMessageBox(dialogAlert, (i) => console.log(i))
       return
     }    
-    
+
+    let velocidade = document.getElementById("myRange").value
+
     if(arrayPontos != 0){
       const dialogAlert = {title: "Erro", type: 'question', buttons: ['Confirmar', 'Cancelar'], message: "Tem certeza de que deseja gerar novamente?"}
       let response = await dialog.showMessageBox(dialogAlert).then(function(value){
@@ -47,49 +49,41 @@ async function gerar(){
         return
       }     
     } 
-
+    
+    let altura = 0;
     let lista = document.getElementById("listaPontos")
     let hidrofone = 0
     let distanciaEntreHidrofones = (Number.parseFloat(distancia)) / (Number.parseInt(hidrofones))
     
-    let seno = 0
-    let x1 = 0
-    let x2 = 0
+    let radianos = (Math.PI/180) * Number.parseFloat(angulo);
+    let tangente = Math.tan(radianos);
     
     for(i = 0; i < Number.parseInt(hidrofones); i++){
         hidrofone = hidrofone + distanciaEntreHidrofones
-        x2 = hidrofone
-        seno = (x2 - x1) / distanciaEntreHidrofones
-        myConsole.log("x1: " + x1 + " | x2: " + x2 + "| D: " + distanciaEntreHidrofones + " | Seno: " + seno)
-
-        let tempo = (2 * Math.sqrt( Math.pow((Number.parseFloat(altura)), 2) + (Math.pow(Number.parseFloat(hidrofone), 2) / 4) ) ) / Number.parseFloat(velocidade)
+        altura = hidrofone * tangente
+        //myConsole.log("x1: " + x1 + " | x2: " + x2 + "| D: " + distanciaEntreHidrofones + " | Seno: " + seno)
+        let tempo =  Math.sqrt( (Math.pow(hidrofone, 2) + (4 * Math.pow(altura, 2)) + (4 * hidrofone * altura) * Math.sin(radianos)) ) / Number.parseFloat(velocidade)
 
         let pontoJson = {
             "sequencia": arrayPontos.length+1, 
-            "pontoInicial": x1,
-            "pontoFinal": x2, 
-            "alturaInicial": Number.parseFloat(altura),
-            "alturaFinal": Number.parseFloat(altura) + Number.parseFloat(seno),
+            "hidrofone": hidrofone / 1000,
+            "altura": altura,
             "velocidade": velocidade, 
             "tempo": tempo
         }
 
         arrayPontos.push(pontoJson)
-        lista.innerHTML += gerarPontoNaLista(pontoJson.sequencia, pontoJson.pontoInicial, pontoJson.pontoFinal, pontoJson.alturaInicial, pontoJson.alturaFinal, pontoJson.velocidade, pontoJson.tempo)
-        x1 = x2
-        altura = Number.parseFloat(altura) + Number.parseFloat(seno)
+        lista.innerHTML += gerarPontoNaLista(pontoJson.sequencia, pontoJson.hidrofone, pontoJson.altura, pontoJson.velocidade, pontoJson.tempo)
     } 
     calcular()                
 }
 
-function gerarPontoNaLista(sequencia, pontoInicial, pontoFinal, alturaInicial, alturaFinal, velocidade, tempo){
+function gerarPontoNaLista(sequencia, hidrofone, altura, velocidade, tempo){
   let ponto =  "<ul class='ponto'>" 
   + "   <li class='sequencia'><div class='dot2'></div><strong> N° " + sequencia + " </strong></li> "
   + "   <li class='separador'></li> "
-  + "   <li class='linha'> Ponto Inicial: <strong>" + pontoInicial + " km</strong> </li> "
-  + "   <li class='linha'> Ponto Final: <strong>" + pontoFinal + " km</strong> </li> "
-  + "   <li class='linha'> Altura Inicial: <strong>" + alturaInicial + " km</strong></li> "
-  + "   <li class='linha'> Altura Final: <strong>" + alturaFinal + " km</strong></li> "
+  + "   <li class='linha'> Hidrofone: <strong>" + hidrofone + " km</strong> </li> "
+  + "   <li class='linha'> Altura: <strong>" + altura + " m</strong> </li> "
   + "   <li class='linha'> Velocidade: <strong>" + velocidade + " km s-¹</strong></li> "
   + "   <li class='linha'> Tempo: <strong>" + tempo + " s</strong></li> "
   + "</ul>"
@@ -97,18 +91,19 @@ function gerarPontoNaLista(sequencia, pontoInicial, pontoFinal, alturaInicial, a
 }
 
 function calcular(){
-    let distancia = document.getElementById("distancia").value/1000
+    let distancia = document.getElementById("distancia").value
     let selectedMaterial = document.getElementById("material")
     let texto = selectedMaterial.options[selectedMaterial.selectedIndex].text
     let velocidade = document.getElementById("myRange").value
     let painelTotais = document.getElementById("painelTotais")
-    let altura = document.getElementById("altura").value/1000
+    let angulo = document.getElementById("angulo").value
+    
     let distanciaTotal = 0
     let alturaTotal = 0
     let tempoTotal = 0
     
     for(i=0; i < arrayPontos.length; i++){
-        distanciaTotal += Number(arrayPontos[i].pontoFinal)
+        distanciaTotal += Number(arrayPontos[i].hidrofone)
         alturaTotal += Number(arrayPontos[i].altura)
         if(i+1 == arrayPontos.length)
           tempoTotal = Number(arrayPontos[i].tempo)
@@ -117,10 +112,11 @@ function calcular(){
     painelTotais.innerHTML = "<ul class='box_resultados'>" 
                           + "   <li><h4>Resultados</h4></li> "
                           + "   <li class='separador'></li> "
-                          //+ "   <li class='linha'> Posição do último hidrofone: <strong> " + distancia + " km </strong> </li> "
-                          + "   <li class='linha'> Altura: <strong>" + altura + " km </strong></li> "
-                          + "   <li class='linha'> Tempo total: <strong>" + tempoTotal + " s </strong> </li> "
-                          + "   <li class='linha'> Material: <strong>" + texto + "</strong> </li> "                          
+                          + "   <li class='linha'> Material: <strong>" + texto + "</strong> </li> "           
+                          + "   <li class='linha'> Distância: <strong> " + distancia/1000 + " km </strong> </li> "
+                          + "   <li class='linha'> Ângulo: <strong>" + angulo + "° </strong></li> "
+                          + "   <li class='linha'> Altura: <strong>" + alturaTotal + " m </strong></li> "
+                          + "   <li class='linha'> Tempo de último hidrofone: <strong>" + tempoTotal + " s </strong> </li> "
                           + "   <li class='linha'> Velocidade: <strong>" + velocidade + "km s-¹ </strong> </li> "
                           + "</ul>"
     
@@ -157,7 +153,6 @@ async function limpar(){
     valueRange.innerHTML = '';
     let hidrofones = document.getElementById("hidrofones").value = ''
     let distancia = document.getElementById("distancia").value = ''
-    let altura = document.getElementById("altura").value = ''
     myChart.data.labels = []
     myChart.data.datasets = []
     window.myChart.update()
@@ -178,22 +173,20 @@ function limparListas(){
 function renderChart() {
   myChart.data.datasets = []
   let newDataset
-  let resto = 0
-    for(i=0; i < arrayPontos.length; i++){  
-      myConsole.log(arrayPontos[i])
-      newDataset = {
-        label: 'N' + (i+1),
-        data: [{x: (arrayPontos[i].pontoInicial), y: 0}, 
-              {x: ((arrayPontos[i].pontoFinal)/2 + resto), y: ((arrayPontos[i].alturaFinal/2)*-1)},  
-              {x: arrayPontos[i].pontoFinal, y: 0}],
-        lineTension: 0,
-        backgroundColor: getRandomColor(),
-        borderColor: getRandomColor(),
-      };
-      resto = (arrayPontos[i].pontoFinal/2)
-      myChart.data.datasets.push(newDataset)
-      window.myChart.update()
-    }
+  for(i=0; i < arrayPontos.length; i++){  
+    //myConsole.log(arrayPontos[i])
+    newDataset = {
+      label: 'N' + (i+1),
+      data: [{x: 0, y: 0}, 
+        {x: ((arrayPontos[i].hidrofone)/2), y: ((arrayPontos[i].altura)*-1)},  
+        {x: arrayPontos[i].hidrofone, y: 0}],
+      lineTension: 0,
+      backgroundColor: getRandomColor(),
+      borderColor: getRandomColor(),
+    };
+    myChart.data.datasets.push(newDataset)
+    window.myChart.update()
+  }
 }
 
 async function voltarParaCadastroHidrofones(){
@@ -238,7 +231,7 @@ function getRandomColor() {
 var ctx
 var myChart
 window.onload = function() {
-	myConsole.log( "Renderizando grafico.");
+	//myConsole.log( "Renderizando grafico.");
 	ctx = document.getElementById("myChart").getContext('2d');
 	myChart = new Chart(ctx, {
         type: 'scatter',

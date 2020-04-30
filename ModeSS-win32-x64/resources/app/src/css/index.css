@@ -139,6 +139,7 @@ body{
 }
 
 #painelTotais{
+    overflow-y: scroll;
     background: white;
     border-radius: 3px;
     height: 25vh;
@@ -193,6 +194,16 @@ body{
     width: 15px;
     border-radius: 3px;
     background: #007bff;
+    float: left;
+    margin: 0 !important;
+    margin-right: 8px !important;
+}
+
+.ponto .dot2{
+    height: 15px;
+    width: 15px;
+    border-radius: 3px;
+    background: #fe346e;
     float: left;
     margin: 0 !important;
     margin-right: 8px !important;
