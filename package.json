@@ -17,6 +17,8 @@
     "electron-chartjs": "^1.0.0",
     "electron-log": "^3.0.8",
     "electron-reload": "^1.5.0",
-    "nodemon": "^1.19.3"
+    "kind-of": "^6.0.3",
+    "minimist": "^1.2.5",
+    "nodemon": "^2.0.3"
   }
 }

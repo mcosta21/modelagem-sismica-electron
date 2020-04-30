@@ -61,25 +61,30 @@ async function gerar(){
         let pontoJson = {
             "sequencia": arrayPontos.length, 
             "distancia": Number(geofone), 
-            "altura": altura, 
+            "altura": altura.toFixed(3), 
             "velocidade": velocidade, 
-            "tempo": tempo
+            "tempo": tempo.toFixed(3)
         }
 
         arrayPontos.push(pontoJson)
 
-        let ponto =   "<ul class='ponto'>" 
-        + "   <li class='sequencia'><div class='dot'></div><strong> N° " + arrayPontos.length + " </strong></li> "
-        + "   <li class='separador'></li> "
-        + "   <li class='linha'> Distância: <strong>" + geofone + " km</strong> </li> "
-        + "   <li class='linha'> Altura: <strong>" + altura + " km</strong></li> "
-        + "   <li class='linha'> Velocidade: <strong>" + velocidade + " km s-¹</strong></li> "
-        + "   <li class='linha'> Tempo: <strong>" + tempo + " s</strong></li> "
-        + "</ul>"
+        lista.innerHTML += gerarPontoNaLista(pontoJson.sequencia, pontoJson.distancia, pontoJson.altura, pontoJson.velocidade, pontoJson.tempo);
 
-        lista.innerHTML += ponto
     } 
     calcular()                
+}
+
+function gerarPontoNaLista(sequencia, geofone, altura, velocidade, tempo) {
+  let ponto =  
+      "<ul class='ponto'>"
+    + "   <li class='sequencia'><div class='dot'></div><strong> N° " + sequencia + " </strong></li> "
+    + "   <li class='separador'></li> "
+    + "   <li class='linha'> Distância: <strong>" + geofone + " km</strong> </li> "
+    + "   <li class='linha'> Altura: <strong>" + altura + " km</strong></li> "
+    + "   <li class='linha'> Velocidade: <strong>" + velocidade + " km s-¹</strong></li> "
+    + "   <li class='linha'> Tempo: <strong>" + tempo + " s</strong></li> "
+    + "</ul>";
+    return ponto
 }
 
 function calcular(){

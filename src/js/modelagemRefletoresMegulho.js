@@ -67,11 +67,11 @@ async function gerar(){
         let pontoJson = {
             "sequencia": arrayPontos.length+1, 
             "hidrofone": hidrofone / 1000,
-            "altura": altura,
+            "altura": altura.toFixed(3),
             "velocidade": velocidade, 
-            "tempo": tempo
+            "tempo": tempo.toFixed(3)
         }
-
+        myConsole.log()
         arrayPontos.push(pontoJson)
         lista.innerHTML += gerarPontoNaLista(pontoJson.sequencia, pontoJson.hidrofone, pontoJson.altura, pontoJson.velocidade, pontoJson.tempo)
     } 
@@ -79,7 +79,8 @@ async function gerar(){
 }
 
 function gerarPontoNaLista(sequencia, hidrofone, altura, velocidade, tempo){
-  let ponto =  "<ul class='ponto'>" 
+  let ponto =  
+    "<ul class='ponto'>" 
   + "   <li class='sequencia'><div class='dot2'></div><strong> N° " + sequencia + " </strong></li> "
   + "   <li class='separador'></li> "
   + "   <li class='linha'> Hidrofone: <strong>" + hidrofone + " km</strong> </li> "
@@ -116,7 +117,7 @@ function calcular(){
                           + "   <li class='linha'> Distância: <strong> " + distancia/1000 + " km </strong> </li> "
                           + "   <li class='linha'> Ângulo: <strong>" + angulo + "° </strong></li> "
                           + "   <li class='linha'> Altura: <strong>" + alturaTotal + " m </strong></li> "
-                          + "   <li class='linha'> Tempo de último hidrofone: <strong>" + tempoTotal + " s </strong> </li> "
+                          + "   <li class='linha'> Tempo do último hidrofone: <strong>" + tempoTotal + " s </strong> </li> "
                           + "   <li class='linha'> Velocidade: <strong>" + velocidade + "km s-¹ </strong> </li> "
                           + "</ul>"
     
