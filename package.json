@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^6.0.11",
-    "electron-packager": "^14.1.1"
+    "electron": "^6.1.10",
+    "electron-packager": "^14.2.1"
   },
   "dependencies": {
     "chart.js": "^2.8.0",
