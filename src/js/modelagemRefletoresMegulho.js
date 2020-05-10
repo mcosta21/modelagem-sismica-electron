@@ -64,23 +64,26 @@ async function gerar(){
     
     let radianos = (Math.PI/180) * Number.parseFloat(angulo);
     let tangente = Math.tan(radianos);
-    
+    let alturaMedia = 0
+
     for(i = 0; i < Number.parseInt(hidrofones); i++){
         hidrofone = hidrofone + distanciaEntreHidrofones
-        altura = hidrofone * tangente
-        //myConsole.log("x1: " + x1 + " | x2: " + x2 + "| D: " + distanciaEntreHidrofones + " | Seno: " + seno)
-        let tempo =  Math.sqrt( (Math.pow(hidrofone, 2) + (4 * Math.pow(altura, 2)) + (4 * hidrofone * altura) * Math.sin(radianos)) ) / Number.parseFloat(velocidade)
+        altura = hidrofone * tangente + Number.parseFloat(alturaInicial)
+        alturaMedia = ((hidrofone/2) * tangente + Number.parseFloat(alturaInicial))
 
+        let tempo = (2 * alturaMedia / Number.parseFloat(velocidade)) * (Math.sqrt( 1 + ( ( Math.pow(hidrofone, 2) + 4 * alturaMedia * hidrofone *  Math.sin(radianos) ) / (4 * Math.pow(alturaMedia, 2)) ) )) 
         let pontoJson = {
             "sequencia": arrayPontos.length+1, 
             "hidrofone": hidrofone / 1000,
             "altura": altura.toFixed(3),
             "velocidade": velocidade, 
-            "tempo": tempo.toFixed(3)
+            "tempo": tempo.toFixed(3),
+            "alturaInicial": alturaInicial,
+            "alturaMedia": alturaMedia.toFixed(3)
         }
         myConsole.log()
         arrayPontos.push(pontoJson)
-        lista.innerHTML += gerarPontoNaLista(pontoJson.sequencia, pontoJson.hidrofone, pontoJson.altura, pontoJson.velocidade, pontoJson.tempo)
+        lista.innerHTML += gerarPontoNaLista(pontoJson.sequencia, pontoJson.hidrofone, pontoJson.alturaMedia, pontoJson.velocidade, pontoJson.tempo)
     } 
     calcular()                
 }
@@ -112,7 +115,7 @@ function calcular(){
     
     for(i=0; i < arrayPontos.length; i++){
         distanciaTotal += Number(arrayPontos[i].hidrofone)
-        alturaTotal += Number(arrayPontos[i].altura)
+        alturaTotal += Number(arrayPontos[i].alturaMedia)
         if(i+1 == arrayPontos.length)
           tempoTotal = Number(arrayPontos[i].tempo)
     }
@@ -123,7 +126,7 @@ function calcular(){
                           + "   <li class='linha'> Material: <strong>" + texto + "</strong> </li> "           
                           + "   <li class='linha'> Distância: <strong> " + distancia/1000 + " km </strong> </li> "
                           + "   <li class='linha'> Ângulo: <strong>" + angulo + "° </strong></li> "
-                          + "   <li class='linha'> Altura: <strong>" + alturaTotal + " m </strong></li> "
+                          + "   <li class='linha'> Altura: <strong>" + alturaTotal.toFixed(3) + " m </strong></li> "
                           + "   <li class='linha'> Tempo do último hidrofone: <strong>" + tempoTotal + " s </strong> </li> "
                           + "   <li class='linha'> Velocidade: <strong>" + velocidade + "km s-¹ </strong> </li> "
                           + "</ul>"
@@ -161,6 +164,8 @@ async function limpar(){
     valueRange.innerHTML = '';
     let hidrofones = document.getElementById("hidrofones").value = ''
     let distancia = document.getElementById("distancia").value = ''
+    let alturaInicial = document.getElementById("altura").value = ''
+    let angulo = document.getElementById("angulo").value = ''
     myChart.data.labels = []
     myChart.data.datasets = []
     window.myChart.update()
@@ -180,17 +185,49 @@ function limparListas(){
 
 function renderChart() {
   myChart.data.datasets = []
+
+  let alturaInicial = document.getElementById("altura").value
+  alturaInicial = Number.parseFloat(alturaInicial)
+  let line = {
+    label: "Linha",
+    data: [{x: 0, y: alturaInicial*-1},
+    {x: arrayPontos[arrayPontos.length-1].hidrofone, y: arrayPontos[arrayPontos.length-1].altura*-1}],
+    lineTension: 0,
+    backgroundColor: 'transparent',
+    borderColor: '#007bff',
+    pointRadius: 3,
+    type: 'line'
+  };
+  myChart.data.datasets.push(line)
+  window.myChart.update()
+  
+  let startPoint = { 
+    label: 'Fonte',
+    data: [ {x: 0.000000000000001, y: -0.000000000000001} ],
+    backgroundColor: 'gray',
+    borderColor: 'gray',
+    pointBackgroundColor: this.borderColor,
+    pointBorderColor: this.borderColor,
+    pointBorderWidth: 8,
+    pointStyle: 'rectRot',
+  }
+  myChart.data.datasets.push(startPoint)
+  window.myChart.update()
+  
   let newDataset
   for(i=0; i < arrayPontos.length; i++){  
     //myConsole.log(arrayPontos[i])
     newDataset = {
       label: 'N' + (i+1),
       data: [{x: 0, y: 0}, 
-        {x: ((arrayPontos[i].hidrofone)/2), y: ((arrayPontos[i].altura)*-1)},  
+        {x: ((arrayPontos[i].hidrofone)/2), y: ((arrayPontos[i].alturaMedia)*-1)},  
         {x: arrayPontos[i].hidrofone, y: 0}],
       lineTension: 0,
       backgroundColor: getRandomColor(),
-      borderColor: getRandomColor(),
+      borderColor: this.backgroundColor,
+      pointBackgroundColor: this.backgroundColor,
+      pointBorderColor: this.backgroundColor,
+      pointBorderWidth: 4,
     };
     myChart.data.datasets.push(newDataset)
     window.myChart.update()
@@ -233,7 +270,7 @@ function ocultarGrafico(){
 }
 
 function getRandomColor() {
-    return "rgba(" + (Math.random() * 256) + ", " + (Math.random() * 256) + ", " + (Math.random() * 256) + ", 0.2)"    
+    return "rgba(" + (Math.random() * 256) + ", " + (Math.random() * 256) + ", " + (Math.random() * 256) + ", 0.4)"    
 }
 
 var ctx
@@ -248,7 +285,7 @@ window.onload = function() {
 			  },
 			  options: {
         maintainAspectRatio: false,
-				showLines: true,
+        showLines: true,
 				scales: {
 					yAxes: [{
 					  scaleLabel: {
@@ -267,7 +304,7 @@ window.onload = function() {
 				  },
 				  title: {
 						display: true,
-						text: 'PLOTAGEM',
+						text: 'Modelagem',
 						fontSize: 16
 					}
 			}
