@@ -231,6 +231,7 @@ window.onload = function() {
 				datasets: []		
 			  },
 			  options: {
+        maintainAspectRatio: false,
 				showLines: true,
 				scales: {
 					yAxes: [{

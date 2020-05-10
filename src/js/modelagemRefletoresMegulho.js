@@ -20,6 +20,13 @@ async function gerar(){
         return
     }
 
+    let alturaInicial = document.getElementById("altura").value
+    if(alturaInicial.length == 0){
+        const dialogAlert = {title: "Erro", type: 'info', buttons: ['OK'], message: "O altura inicial não foi informada."}
+        dialog.showMessageBox(dialogAlert, (i) => console.log(i))
+        return
+    }
+
     let angulo = document.getElementById("angulo").value
     if(angulo.length == 0){
         const dialogAlert = {title: "Erro", type: 'info', buttons: ['OK'], message: "O ângulo não foi informado."}
@@ -240,6 +247,7 @@ window.onload = function() {
 				datasets: []		
 			  },
 			  options: {
+        maintainAspectRatio: false,
 				showLines: true,
 				scales: {
 					yAxes: [{
