@@ -24,7 +24,7 @@
             </div>
             <div class="col-sm-10 conteudo">
                 
-                    <div id="painelCadastro">
+                    <div id="painelCadastro" style="background-color: red;">
                            
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
@@ -32,7 +32,7 @@
                             </ol>
                         </nav>                        
                         
-                        <div id="cadastroHidrofones">
+                        <div id="cadastro">
 
                             <div class="form-group">
                                 <label for="hidrofones">Quantidade de hidrofones</label>
@@ -118,20 +118,76 @@
 
                         </div> 
                       
-                        <div id="painelResultados">
-                            <div class="row row1">
-                                <div id="painelChart" class="col-sm-9">
-                                    <canvas id="myChart"></canvas>
+                        <div class="container-fluid" id="painelResultados" style="background-color: blue;">
+
+                            <div class="row" style="background-color: green;">
+
+                                <div class="col-lg-9 col-sm-12">
+
+                                    <div id="painelChart">
+                                        <canvas id="myChart"></canvas>
+                                    </div>
+
+                                    <div class="marginTop20" id="painelTotais">
+                                    </div>
+
+                                    <div class="row marginTop20 padd0" id="painelProcessChart">
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary btn-lg btn-block" onClick="voltarParaCadastro()">
+                                                <svg style="padding: 6px" class="bi bi-chevron-double-left" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                                    <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                                  </svg>
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary btn-lg btn-block" onClick="voltarParaCadastro()">
+                                                <svg style="padding: 6px" class="bi bi-chevron-left" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                                  </svg>
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary btn-lg btn-block" onClick="voltarParaCadastro()">
+                                                <svg class="bi bi-play-fill" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                                                  </svg>
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary btn-lg btn-block" onClick="voltarParaCadastro()">
+                                                <svg style="padding: 6px" class="bi bi-chevron-right" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                                  </svg>
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary btn-lg btn-block" onClick="voltarParaCadastro()">
+                                                <svg style="padding: 6px" class="bi bi-chevron-double-right" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                                    <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                                  </svg>
+                                            </button>
+                                        </div>
+                                       
+                                    </div>
+
+                                    
+
                                 </div>
-                                <div id="painelObjetos" class="col">
-                                    <div id="listaPontos"></div>
+
+                                <div class="col-lg-3 col-sm-12">
+
+                                    <div id="painelObjetos">
+                                        <div id="listaPontos"></div>
+                                    </div>
+
+                                    <div class="marginTop20 painelBotoes">
+                                        <button type="button" class="btn btn-primary btn-lg btn-block" onClick="voltarParaCadastro()">Voltar</button>
+                                    </div>
+
                                 </div>
-                            </div>
-                            <div class="row row2">
-                                <div id="painelTotais" class="col-sm-9"></div>
-                                <div class="col painelBotoes">
-                                    <button type="button" class="btn btn-primary btn-lg btn-block" onClick="voltarParaCadastroHidrofones()">Voltar</button>
-                                </div>
+
                             </div>
                             
                         </div>
@@ -145,6 +201,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript" src="src/js/modelagemRefletoresMegulho.js"></script>
+    <script type="text/javascript" src="src/js/defaultFunctions.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
