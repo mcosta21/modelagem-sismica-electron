@@ -115,7 +115,7 @@ function calcular(){
     let selectedMaterial = document.getElementById("material")
     let texto = selectedMaterial.options[selectedMaterial.selectedIndex].text
     let velocidade = document.getElementById("myRange").value
-    let painelTotais = document.getElementById("painelTotais")
+    let panelResultTotals = document.getElementById("panelResultTotals")
     let angulo = document.getElementById("angulo").value
     
     let distanciaTotal = 0
@@ -129,17 +129,31 @@ function calcular(){
           tempoTotal = Number(arrayPontos[i].tempo)
     }
     
-    painelTotais.innerHTML = "<ul class='box_resultados'>" 
-                          + "   <li><h4>Resultados</h4></li> "
-                          + "   <li class='separador'></li> "
-                          + "   <li class='linha'> Material: <strong>" + texto + "</strong> </li> "           
-                          + "   <li class='linha'> Distância: <strong> " + distancia/1000 + " km </strong> </li> "
-                          + "   <li class='linha'> Ângulo: <strong>" + angulo + "° </strong></li> "
-                          + "   <li class='linha'> Altura: <strong>" + alturaTotal.toFixed(3) + " m </strong></li> "
-                          + "   <li class='linha'> Tempo do último hidrofone: <strong>" + tempoTotal + " s </strong> </li> "
-                          + "   <li class='linha'> Velocidade: <strong>" + velocidade + "km s-¹ </strong> </li> "
-                          + "</ul>"
-    
+    panelResultTotals.innerHTML = "<tr>"
+                                +   "<td><h6>Material</h6></td>"
+                                +   "<td><h6>" + texto + "</h6></td>"
+                                + "</tr>"    
+                                + "<tr>"
+                                +   "<td><h6>Distância</h6></td>"
+                                +   "<td><h6'>" + distancia/1000 + " km</h6></td>"
+                                + "</tr>"  
+                                + "<tr>"
+                                +   "<td><h6>Ângulo</h6></td>"
+                                +   "<td><h6'>" + angulo + "°</h6></td>"
+                                + "</tr>"  
+                                + "<tr>"
+                                +   "<td><h6>Altura</h6></td>"
+                                +   "<td><h6'>" + alturaTotal.toFixed(3) + " m</h6></td>"
+                                + "</tr>"  
+                                + "<tr>"
+                                +   "<td><h6>Tempo do último hidrofone</h6></td>"
+                                +   "<td><h6'>" + tempoTotal + " s</h6></td>"
+                                + "</tr>"  
+                                + "<tr>"
+                                +   "<td><h6>Velocidade</h6></td>"
+                                +   "<td><h6'>" + velocidade + "km s-¹ </h6></td>"
+                                + "</tr>"  
+ 
     //renderChart()    
     ocultarCadastro()
     mostrarGrafico()
@@ -172,54 +186,7 @@ function renderChart() {
   }
 }
 
-function backAllProcess(){
-  myChart.data.datasets = []
-  window.myChart.update()
-}
 
-function backOneProcess(){
-  myChart.data.datasets.pop()
-  window.myChart.update()
-}
-
-function PlayAllProcess(){
-  renderChart();
-}
-
-function nextOneProcess(){
-  
-  if(myChart.data.datasets.length < 2){
-    myChart.data.datasets = []
-    createStartPoint();
-    createLine();
-    return;
-  }
-  
-  let point = myChart.data.datasets.length-2
-  let newDataset = {
-    label: 'N' + (point+1),
-    data: [{x: 0, y: 0}, 
-      {x: ((arrayPontos[point].hidrofone)), y: ((arrayPontos[point].altura)*-1)},  
-      {x: arrayPontos[point].hidrofone, y: 0}],
-    lineTension: 0,
-    backgroundColor: getRandomColor(),
-    borderColor: this.backgroundColor,
-    pointBackgroundColor: this.backgroundColor,
-    pointBorderColor: this.backgroundColor,
-    pointBorderWidth: 4,
-  };
-  
-  myChart.data.datasets.push(newDataset)
-  window.myChart.update()
-}
-
-async function nextAllProcess(){
-  let i = myChart.data.datasets.length-2
-  while(i != arrayPontos.length){
-    nextOneProcess()
-    i++;
-  }
-}
 
 function createLine(){
   let alturaInicial = document.getElementById("altura").value
@@ -252,12 +219,6 @@ function createStartPoint(){
   myChart.data.datasets.push(startPoint)
   window.myChart.update()
 }
-
-
-
-
-
-
 
 function findPerfectAngle(){
   let hidrofones = document.getElementById("hidrofones").value

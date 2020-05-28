@@ -8,6 +8,51 @@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <body>
     <div>
+
+        <div class="modal fade" id="modalUsedFormula" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Fórmula</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body modalFormula">
+                    <img src="./src/images/refletores-mergulho-formula.png">
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th scope="col">Variável</th>
+                                <th scope="col">Descrição</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td><h4><span class="badge badge-secondary">  t  </span></h4></td>
+                                <td><h6 style="margin-top: 6px;">Tempo</h6></td>
+                              </tr>
+                              <tr>
+                                <td><h4><span class="badge badge-secondary">  h  </span></h4></td>
+                                <td><h6 style="margin-top: 6px;">Altura inicial</h6></td>
+                              </tr>
+                              <tr>
+                                <td><h4><span class="badge badge-secondary">  x  </span></h4></td>
+                                <td><h6 style="margin-top: 6px;">Posição do hidrone no eixo x</h6></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-sm-2 menu_lateral">
                 <div class="row align-items-center box_logo">
@@ -113,7 +158,7 @@
                                 </div>
                             </div>
                             
-                            <div class="row" style="height: 50px; margin-top: 20px !important; ">
+                            <div class="row painelButtonsProcess">
                                 <div class="col" style="padding-left: 0 !Important;">
                                     <button type="button" class="btn btn-primary btn-lg btn-block" onClick="gerar()">Calcular</button>
                                 </div>
@@ -126,7 +171,7 @@
                       
                         <div class="container-fluid" id="painelResultados">
 
-                            <div class="row" style="height: 900px;">
+                            <div class="row" style="height: inherit;">
 
                                 <div class="col-lg-9 col-sm-12">
 
@@ -175,6 +220,17 @@
                                     </div>
 
                                     <div class="marginTop20" id="painelTotais">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                  <tr>
+                                                    <th colspan="2" scope="col"><h4>Resultados</h4></th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody id="panelResultTotals">
+                                                </tbody>
+                                              </table>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -187,7 +243,7 @@
 
                                     <div class="marginTop20 painelBotoes">
                                         <button type="button" class="btn btn-primary btn-lg btn-block" onClick="voltarParaCadastro()">Voltar</button>
-                                        <button type="button" class="btn btn-outline-primary btn-lg btn-block" onClick="voltarParaCadastro()">Fórmula</button>
+                                        <button type="button" class="btn btn-outline-primary btn-lg btn-block" data-toggle="modal" data-target="#modalUsedFormula">Fórmula</button>
                                     </div>
 
                                 </div>

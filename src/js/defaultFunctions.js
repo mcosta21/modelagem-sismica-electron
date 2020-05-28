@@ -175,8 +175,12 @@ window.onload = function() {
 				datasets: []		
 			  },
 			  options: {
-        maintainAspectRatio: false,
-        showLines: true,
+                maintainAspectRatio: false,
+                showLines: true,
+                animation: {
+                    duration: 300 * 1.5,
+                    easing: 'linear'
+                  },
 				scales: {
 					yAxes: [{
 					  scaleLabel: {
@@ -260,3 +264,52 @@ async function limpar(){
     myChart.data.datasets = []
     window.myChart.update()
 }
+
+function backAllProcess(){
+    myChart.data.datasets = []
+    window.myChart.update()
+  }
+  
+  function backOneProcess(){
+    myChart.data.datasets.pop()
+    window.myChart.update()
+  }
+  
+  function PlayAllProcess(){
+    renderChart();
+  }
+  
+  function nextOneProcess(){
+    
+    if(myChart.data.datasets.length < 2){
+      myChart.data.datasets = []
+      createStartPoint();
+      createLine();
+      return;
+    }
+    
+    let point = myChart.data.datasets.length-2
+    let newDataset = {
+      label: 'N' + (point+1),
+      data: [{x: 0, y: 0}, 
+        {x: ((arrayPontos[point].hidrofone)), y: ((arrayPontos[point].altura)*-1)},  
+        {x: arrayPontos[point].hidrofone, y: 0}],
+      lineTension: 0,
+      backgroundColor: getRandomColor(),
+      borderColor: this.backgroundColor,
+      pointBackgroundColor: this.backgroundColor,
+      pointBorderColor: this.backgroundColor,
+      pointBorderWidth: 4,
+    };
+    
+    myChart.data.datasets.push(newDataset)
+    window.myChart.update()
+  }
+  
+  async function nextAllProcess(){
+    let i = myChart.data.datasets.length-2
+    while(i != arrayPontos.length){
+      nextOneProcess()
+      i++;
+    }
+  }
