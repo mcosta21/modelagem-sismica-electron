@@ -74,7 +74,6 @@ async function gerar(){
     for(i = 0; i < hidrofones; i++){
         hidrofone = hidrofone + distanciaEntreHidrofones
         altura = hidrofone * tangente + alturaInicial
-
         
         let point = hidrofone / 2
         myConsole.log(hidrofone + " - " + point)
@@ -141,7 +140,7 @@ function calcular(){
                           + "   <li class='linha'> Velocidade: <strong>" + velocidade + "km s-¹ </strong> </li> "
                           + "</ul>"
     
-    renderChart()    
+    //renderChart()    
     ocultarCadastro()
     mostrarGrafico()
 }
@@ -151,31 +150,8 @@ function renderChart() {
   let alturaInicial = document.getElementById("altura").value
   alturaInicial = Number.parseFloat(alturaInicial) / 1000
  
-  let line = {
-    label: "Linha",
-    data: [{x: 0, y: alturaInicial*-1},
-    {x: arrayPontos[arrayPontos.length-1].hidrofone, y: arrayPontos[arrayPontos.length-1].altura*-1}],
-    lineTension: 0,
-    backgroundColor: 'transparent',
-    borderColor: '#007bff',
-    pointRadius: 3,
-    type: 'line'
-  };
-  myChart.data.datasets.push(line)
-  window.myChart.update()
-  
-  let startPoint = { 
-    label: 'Fonte',
-    data: [ {x: 0.000000000000001, y: -0.000000000000001} ],
-    backgroundColor: 'gray',
-    borderColor: 'gray',
-    pointBackgroundColor: this.borderColor,
-    pointBorderColor: this.borderColor,
-    pointBorderWidth: 8,
-    pointStyle: 'rectRot',
-  }
-  myChart.data.datasets.push(startPoint)
-  window.myChart.update()
+  createStartPoint();
+  createLine();
   
   let newDataset
   for(i=0; i < arrayPontos.length; i++){  
@@ -195,6 +171,93 @@ function renderChart() {
     window.myChart.update()
   }
 }
+
+function backAllProcess(){
+  myChart.data.datasets = []
+  window.myChart.update()
+}
+
+function backOneProcess(){
+  myChart.data.datasets.pop()
+  window.myChart.update()
+}
+
+function PlayAllProcess(){
+  renderChart();
+}
+
+function nextOneProcess(){
+  
+  if(myChart.data.datasets.length < 2){
+    myChart.data.datasets = []
+    createStartPoint();
+    createLine();
+    return;
+  }
+  
+  let point = myChart.data.datasets.length-2
+  let newDataset = {
+    label: 'N' + (point+1),
+    data: [{x: 0, y: 0}, 
+      {x: ((arrayPontos[point].hidrofone)), y: ((arrayPontos[point].altura)*-1)},  
+      {x: arrayPontos[point].hidrofone, y: 0}],
+    lineTension: 0,
+    backgroundColor: getRandomColor(),
+    borderColor: this.backgroundColor,
+    pointBackgroundColor: this.backgroundColor,
+    pointBorderColor: this.backgroundColor,
+    pointBorderWidth: 4,
+  };
+  
+  myChart.data.datasets.push(newDataset)
+  window.myChart.update()
+}
+
+async function nextAllProcess(){
+  let i = myChart.data.datasets.length-2
+  while(i != arrayPontos.length){
+    nextOneProcess()
+    i++;
+  }
+}
+
+function createLine(){
+  let alturaInicial = document.getElementById("altura").value
+  alturaInicial = Number.parseFloat(alturaInicial) / 1000
+  let line = {
+    label: "Linha",
+    data: [{x: 0, y: alturaInicial*-1},
+    {x: arrayPontos[arrayPontos.length-1].hidrofone, y: arrayPontos[arrayPontos.length-1].altura*-1}],
+    lineTension: 0,
+    backgroundColor: 'transparent',
+    borderColor: '#007bff',
+    pointRadius: 3,
+    type: 'line'
+  };
+  myChart.data.datasets.push(line)
+  window.myChart.update()
+}
+
+function createStartPoint(){
+  let startPoint = { 
+    label: 'Fonte',
+    data: [ {x: 0.000000000000001, y: -0.000000000000001} ],
+    backgroundColor: 'gray',
+    borderColor: 'gray',
+    pointBackgroundColor: this.borderColor,
+    pointBorderColor: this.borderColor,
+    pointBorderWidth: 8,
+    pointStyle: 'rectRot',
+  }
+  myChart.data.datasets.push(startPoint)
+  window.myChart.update()
+}
+
+
+
+
+
+
 
 function findPerfectAngle(){
   let hidrofones = document.getElementById("hidrofones").value

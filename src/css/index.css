@@ -133,9 +133,11 @@ body{
 
 #painelTotais{
     overflow-y: scroll;
+    position: absolute;
     background: white;
     border-radius: 3px;
-    height: 25vh;
+    width: 98%;
+    height: 40vh;
     box-shadow: 2px 2px 10px #e5e5e5;
 }
 
@@ -244,4 +246,11 @@ body{
 
 .padd0{
     padding: 0
+}
+
+#painelProcessChart{
+    height: 100px;
+    background: white;
+    border-radius: 3px;
+    box-shadow: 2px 2px 10px #e5e5e5;
 }
