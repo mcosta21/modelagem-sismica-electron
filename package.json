@@ -1,0 +1,25 @@
+{
+  "name": "ModeSS",
+  "version": "1.0.0",
+  "description": "Projeto de iniciação cientifica",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^7.3.2",
+    "electron-packager": "^14.2.1"
+  },
+  "dependencies": {
+    "chart.js": "^2.8.0",
+    "electron-chartjs": "^1.0.0",
+    "electron-log": "^3.0.8",
+    "electron-reload": "^1.5.0",
+    "kind-of": "^6.0.3",
+    "lodash": "^4.17.19",
+    "minimist": "^1.2.5",
+    "nodemon": "^2.0.3"
+  }
+}

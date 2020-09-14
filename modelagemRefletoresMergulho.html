@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Modelagem por Refletores de Mergulho</title>
+</head>
+<link rel="stylesheet" type="text/css" href="./src/css/index.css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<body>
+    <div>
+
+        <div class="modal fade" id="modalUsedFormula" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Fórmula</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body modalFormula">
+                    <img src="./src/images/refletores-mergulho-formula.png">
+                    <hr>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                              <tr>
+                                <th scope="col">Variável</th>
+                                <th scope="col">Descrição</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td><h4><span class="badge badge-secondary">  t  </span></h4></td>
+                                <td><h6 style="margin-top: 6px;">Tempo</h6></td>
+                              </tr>
+                              <tr>
+                                <td><h4><span class="badge badge-secondary">  h  </span></h4></td>
+                                <td><h6 style="margin-top: 6px;">Altura inicial</h6></td>
+                              </tr>
+                              <tr>
+                                <td><h4><span class="badge badge-secondary">  x  </span></h4></td>
+                                <td><h6 style="margin-top: 6px;">Posição do hidrone no eixo x</h6></td>
+                              </tr>
+                              <tr>
+                                <td><h4><span class="badge badge-secondary">  V  </span></h4></td>
+                                <td><h6 style="margin-top: 6px;">Velocidade do material no meio de propagação</h6></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-2 menu_lateral">
+                <div class="row align-items-center box_logo">
+                    <div class="col">
+                        <a class="nav-link" href=".\index.html"><img src=".\src\images\logo_name.png" width="140px"></a>
+                    </div>                    
+                </div>
+                <nav class="nav flex-column">
+                    <a class="nav-link disabled title_menu" href="#" tabindex="-1" aria-disabled="true">Modelagem Sísmica</a>
+                    <a class="nav-link active" href=".\modelagemSismicaSimplificada.html">Simplificada</a>
+                    <a class="nav-link active" href=".\modelagemRefletoresMergulho.html">Refletores De Mergulho</a>
+                </nav>
+                
+            </div>
+            <div class="col-sm-10 conteudo">
+                
+                    <div id="painelCadastro">
+                           
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item active" aria-current="page">Modelagem por Refletores de Mergulho</li>
+                            </ol>
+                        </nav>                        
+                        
+                        <div id="cadastro">
+
+                            <div class="form-group">
+                                <label for="pointFones">Quantidade de hidrofones</label>
+                                <input type="text" class="form-control" id="pointFones" placeholder="Informe a quantidade de hidrofones">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="distancia">Distância total (m)</label>
+                                <input type="text" class="form-control" id="distancia" placeholder="Informe a distância total">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="altura">Altura inicial</label>
+                                <input type="text" class="form-control" id="altura" placeholder="Informe o altura inicial">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="angulo">Ângulo ( ° )</label>
+                                <input type="text" class="form-control" id="angulo" placeholder="Informe o ângulo de mergulho">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="material">Velocidade Vp(km s-¹)</label>
+
+                                <select class="form-control" id="material" onchange="changeMaterial()">
+                                    <option selected="selected" value=""></option>
+                
+                                    <optgroup label= "Materiais inconsolidados">
+                                        <option value="areiaseca">Areia (Seca) - 0.2 a 1.0</option>
+                                        <option value="areiasaturada">Areia (Saturada em água) - 1.5 a 2.0</option>
+                                        <option value="argila">Argila - 1.0 a 2.5</option>
+                                        <option value="tillglacial">Till gladal (Saturado em água) - 1.5 a 2.5</option>
+                                        <option value="permafroste">Permafroste - 3.5 a 4.0</option>
+                                    </optgroup>
+                
+                                    <optgroup label= "Rochas sedimentares">
+                                        <option value="arenitos">Arenitos - 2.0 a 6.0</option>
+                                        <option value="arenitoterciario">Arenito terciário - 2.0 a 2.5</option>
+                                        <option value="arenitopennant">Arenito Pennant (Carbonífero) - 4.0 a 4.5</option>
+                                        <option value="quartzitocambiano">Quartzito cambiano - 5.5 a 6.0</option>
+                
+                                        <option value="calcarios">Calcários - 2.0 a 6.0</option>
+                                        <option value="greda">Greda cretácea - 2.0 a 2.5</option>
+                                        <option value="oolitos">Oólitos jurássicos e calcários bioclásticos - 3.0 a 4.0</option>
+                                        <option value="calcariocarbonifero">Cálcário carbonífero - 5.0 a 5.5</option>
+                
+                                        <option value="dolomitos">Dolomitos - 2.5 a 6.5</option>
+                                        <option value="sal">Sal - 4.5 a 5.0</option>
+                                        <option value="anidrita">Anidrita - 4.5 a 6.5</option>
+                                        <option value="gripso">Gipso - 2.0 a 3.5</option>
+                                    </optgroup>
+                
+                                    <optgroup label = "Rochas igneas/metamórficas">
+                                        <option value="granito">Granito - 5.5 a 6.0</option>
+                                        <option value="gabro">Gabro - 6.5 a 7.0</option>
+                                        <option value="rochasultra">Rochas ultramáficas - 7.5 a 8.5</option>
+                                        <option value="serpentinito">Serpentinito - 5.5 a 6.5</option>
+                                    </optgroup>
+
+                                    <optgroup label = "Fluidos de poros">
+                                        <option value="ar">Ar - 0.3</option>
+                                        <option value="agua">Água - 1.4 a 1.5</option>
+                                        <option value="gelo">Gelo - 3.4</option>
+                                        <option value="petroleo">Petróleo - 1.3 a 1.4</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            
+                            <label for="myRange">Range de velocidade</label>
+                            <div class="box_range">
+                                <div class="row">
+                                    <div class="col-sm-9">
+                                        <input type="range" min="0.2" max="1.0" step="0.1" class="slider" id="myRange">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <p>Valor: <span id="valueRange"></span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="row painelButtonsProcess">
+                                <div class="col" style="padding-left: 0 !Important;">
+                                    <button type="button" class="btn btn-primary btn-lg btn-block" onClick="gerar()">Calcular</button>
+                                </div>
+                                <div class="col" style="padding-right: 0 !Important;">
+                                    <button type="button" class="btn btn-secondary btn-lg btn-block" onClick="limpar()">Limpar</button>
+                                </div>
+                            </div>
+
+                        </div> 
+                      
+                        <div class="container-fluid" id="painelResultados">
+
+                            <div class="row" style="height: inherit;">
+
+                                <div class="col-lg-9 col-sm-12">
+
+                                    <div id="painelChart" style="margin-bottom: 20px">
+                                        <canvas id="myChart"></canvas>
+                                    </div>
+                                   
+                                    <div class="row marginTop20 padd0" id="painelProcessChart">
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary btn-lg btn-block" onClick="backAllProcess()">
+                                                <svg style="padding: 6px" class="bi bi-chevron-double-left" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M8.354 1.646a.5.5 0 0 1 0 .708L2.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                                    <path fill-rule="evenodd" d="M12.354 1.646a.5.5 0 0 1 0 .708L6.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                                  </svg>
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary btn-lg btn-block" onClick="backOneProcess()">
+                                                <svg style="padding: 6px" class="bi bi-chevron-left" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                                  </svg>
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary btn-lg btn-block" onClick="PlayAllProcess()">
+                                                <svg class="bi bi-play-fill" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+                                                  </svg>
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary btn-lg btn-block" onClick="nextOneProcess()">
+                                                <svg style="padding: 6px" class="bi bi-chevron-right" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                                  </svg>
+                                            </button>
+                                        </div>
+                                        <div class="col">
+                                            <button type="button" class="btn btn-primary btn-lg btn-block" onClick="nextAllProcess()">
+                                                <svg style="padding: 6px" class="bi bi-chevron-double-right" width="2em" height="2em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" d="M3.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L9.293 8 3.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                                    <path fill-rule="evenodd" d="M7.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L13.293 8 7.646 2.354a.5.5 0 0 1 0-.708z"/>
+                                                  </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="marginTop20" id="painelTotais">
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                  <tr>
+                                                    <th colspan="2" scope="col"><h4>Resultados</h4></th>
+                                                  </tr>
+                                                </thead>
+                                                <tbody id="panelResultTotals">
+                                                </tbody>
+                                              </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-lg-3 col-sm-12">
+
+                                    <div id="painelObjetos">
+                                        <div id="listaPontos"></div>
+                                    </div>
+
+                                    <div class="marginTop20 painelBotoes">
+                                        <button type="button" class="btn btn-primary btn-lg btn-block" onClick="voltarParaCadastro()">Voltar</button>
+                                        <button type="button" class="btn btn-outline-primary btn-lg btn-block" data-toggle="modal" data-target="#modalUsedFormula">Fórmula</button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="src/js/modelagemRefletoresMegulho.js"></script>
+    <script type="text/javascript" src="src/js/defaultFunctions.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
