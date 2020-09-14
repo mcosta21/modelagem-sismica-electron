@@ -1,6 +1,6 @@
 
 <h1 align="center">
-<a href="http://www.amitmerchant.com/electron-markdownify"><img src="https://raw.githubusercontent.com/mcosta21/ModeSS/master/images/modess-banner.jpg" alt="ModeSS"/></a>
+<a target="_blank" href="https://github.com/mcosta21"><img src="https://raw.githubusercontent.com/mcosta21/ModeSS/master/images/modess-banner.jpg" alt="ModeSS"/></a>
 </h1>
 
 <h3 align="center">Modelagem Sísmica em Meios Isotrópicos</h3>
