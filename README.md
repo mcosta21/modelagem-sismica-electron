@@ -45,7 +45,7 @@ chegada de modelagens 2D de dados sísmicos provenientes de meios isotrópicos. 
 
 ## Tecnologias
 
-Com objetivo de criar uma ferramenta de fácil acesso no meio academico, o projeto foi desenvolvido com base no framework **Electron**, dado a possibilidade de desenvolvimento com recursos web (Frontend e Backend) e multiplataforma. Para a construção das interfaces, utilizou-se o framework **Bootstrap 4.5** em conjunto com a biblioteca **Charts.js** para construção dos gráficos.
+Com objetivo de criar uma ferramenta de fácil acesso no meio académico, o projeto foi desenvolvido com base no framework **Electron**, dado a possibilidade de desenvolvimento com recursos web (Frontend) e multiplataforma. Para a construção das interfaces, utilizou-se o framework **Bootstrap 4.5** em conjunto com a biblioteca **Charts.js** para construção dos gráficos.
 <strong>
 * [Electron](https://www.electronjs.org/)
 * [Bootstrap v4.5](https://getbootstrap.com/)
