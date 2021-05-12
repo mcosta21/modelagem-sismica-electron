@@ -13,7 +13,7 @@
     "electron-packager": "^14.2.1"
   },
   "dependencies": {
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "electron-chartjs": "^1.0.0",
     "electron-log": "^3.0.8",
     "electron-reload": "^1.5.0",
